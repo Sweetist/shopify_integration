@@ -22,7 +22,7 @@ class ShopifyIntegration < EndpointBase::Sinatra::Base
   private
 
     def shopify_action action, obj_name
-      begin
+        #begin
         action_type = action.split('_')[0]
 
         ## Add and update shouldn't come with a shopify_id, therefore when
@@ -33,6 +33,7 @@ class ShopifyIntegration < EndpointBase::Sinatra::Base
         end
 
         shopify = ShopifyAPI.new(@payload, @config)
+        binding.pry
         response  = shopify.send(action)
 
         case action_type
@@ -76,11 +77,11 @@ class ShopifyIntegration < EndpointBase::Sinatra::Base
         else
           return result 200, response['message']
         end
-      rescue => e
-        print e.cause
-        print e.backtrace.join("\n")
-        result 500, (e.try(:response) ? e.response : e.message)
-      end
+      # rescue => e
+      #   print e.cause
+      #   print e.backtrace.join("\n")
+      #   result 500, (e.try(:response) ? e.response : e.message)
+      # end
     end
 
     def wombat_resend_add?(action_type, obj_name)
