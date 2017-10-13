@@ -8,10 +8,11 @@ gem 'jbuilder', '2.0.7'
 gem 'capistrano'
 gem 'rest-client'
 gem 'require_all'
+gem 'pry'
 
 group :development do
   gem 'shotgun'
-  gem 'pry'
+  #gem 'pry'
   gem 'awesome_print'
 end
 
@@ -30,4 +31,4 @@ group :production do
   gem 'unicorn'
 end
 
-gem 'endpoint_base', github: 'spree/endpoint_base'
+gem 'endpoint_base', github: 'misteral/endpoint_base'

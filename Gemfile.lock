@@ -1,6 +1,6 @@
 GIT
-  remote: git://github.com/spree/endpoint_base.git
-  revision: 5a819541b20ade1b7ec6eb19f38fbab7eaf3e14e
+  remote: git://github.com/misteral/endpoint_base.git
+  revision: da5f2365ebd848a09f09093681237011d4c8e714
   specs:
     endpoint_base (0.3)
       activesupport
@@ -148,3 +148,9 @@ DEPENDENCIES
   unicorn
   vcr
   webmock
+
+RUBY VERSION
+   ruby 2.1.2p95
+
+BUNDLED WITH
+   1.15.4
