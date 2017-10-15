@@ -9,6 +9,7 @@ gem 'capistrano'
 gem 'rest-client'
 gem 'require_all'
 gem 'pry'
+gem 'thin'
 
 group :development do
   gem 'shotgun'
@@ -28,7 +29,7 @@ end
 
 group :production do
   gem 'foreman', '0.66.0'
-  gem 'unicorn'
+  #gem 'unicorn'
 end
 
 gem 'endpoint_base', github: 'misteral/endpoint_base'

@@ -33,7 +33,6 @@ class ShopifyIntegration < EndpointBase::Sinatra::Base
         end
 
         shopify = ShopifyAPI.new(@payload, @config)
-        binding.pry
         response  = shopify.send(action)
 
         case action_type
