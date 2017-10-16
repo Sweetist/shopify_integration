@@ -1,9 +1,24 @@
 require "sinatra"
 require "endpoint_base"
+require "httparty"
 
 require_all 'lib'
 
 class ShopifyIntegration < EndpointBase::Sinatra::Base
+
+  post '/products/create' do
+    # logger.info "Config=#{@config}"
+    # logger.info "Payload=#{@payload}"
+    begin
+      push(@payload.to_json)
+
+      result 200, 'Callback from shipping easy'
+    rescue => e
+      logger.error e.cause
+      logger.error e.backtrace.join("\n")
+      result 500, e.message
+    end
+  end
   post '/*_shipment' do # /add_shipment or /update_shipment
     summary = Shopify::Shipment.new(@payload['shipment'], @config).ship!
 
@@ -97,5 +112,32 @@ class ShopifyIntegration < EndpointBase::Sinatra::Base
 
     def get_without_objects?(response, action_type)
       action_type == 'get' && response['objects'].to_a.size == 0
+    end
+
+    def alternate_order_id(payload)
+      payload['recipients'].first['original_order']['denormalized_alternate_order_id']
+    end
+
+    def push(json_payload)
+      res = HTTParty.post(
+        'http://localhost:9292/cangaroo',
+        body: json_payload,
+        headers: {
+          'Content-Type'       => 'application/json',
+          'X-Hub-Store'        => 'secretkey',
+          'X-Hub-Access-Token' => 'secrettoken',
+          'X-Hub-Timestamp'    => Time.now.utc.to_i.to_s
+        }
+      )
+
+      #validate(res)
+    end
+
+    def add_logs_object(id:, message:, level: 'done', type: 'orders')
+      add_object :log, id: id,
+                       sync_type: SYNC_TYPE,
+                       level: level,
+                       message: message,
+                       type: type
     end
 end
