@@ -10,6 +10,7 @@ gem 'rest-client'
 gem 'require_all'
 gem 'pry'
 gem 'thin'
+gem 'httparty'
 
 group :development do
   gem 'shotgun'

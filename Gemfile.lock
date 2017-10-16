@@ -46,6 +46,8 @@ GEM
     guard-rspec (4.3.1)
       guard (~> 2.1)
       rspec (>= 2.14, < 4.0)
+    httparty (0.15.6)
+      multi_xml (>= 0.5.2)
     i18n (0.6.11)
     jbuilder (2.0.7)
       activesupport (>= 3.0.0, < 5)
@@ -60,6 +62,7 @@ GEM
     mime-types (2.3)
     minitest (5.4.2)
     multi_json (1.10.1)
+    multi_xml (0.6.0)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (2.9.1)
@@ -133,6 +136,7 @@ DEPENDENCIES
   endpoint_base!
   foreman (= 0.66.0)
   guard-rspec
+  httparty
   jbuilder (= 2.0.7)
   pry
   rack-test
