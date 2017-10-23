@@ -63,6 +63,7 @@ class ShopifyIntegration < EndpointBase::Sinatra::Base
             ## Add object to Wombat
             add_object obj_name, obj
           end
+          push(@objects.to_json)
           add_parameter 'since', Time.now.utc.iso8601
 
         when 'add'
@@ -120,7 +121,7 @@ class ShopifyIntegration < EndpointBase::Sinatra::Base
 
     def push(json_payload)
       res = HTTParty.post(
-        'http://localhost:9292/cangaroo',
+        'http://localhost:9292/cangaroo/endpoint',
         body: json_payload,
         headers: {
           'Content-Type'       => 'application/json',

@@ -75,19 +75,19 @@ class ShopifyAPI
     }
 
     # config to return corresponding shipments
-    if @config[:create_shipments].to_i == 1
-      shipments = Array.new
-      orders.each do |order|
-        shipments << Shipment.wombat_obj_from_order(order)
-      end
+    # if @config[:create_shipments].to_i == 1
+    #   shipments = Array.new
+    #   orders.each do |order|
+    #     shipments << Shipment.wombat_obj_from_order(order)
+    #   end
 
-      response.merge({
-        'additional_objs' => shipments,
-        'additional_objs_name' => 'shipment'
-      })
-    else
-      response
-    end
+    #   response.merge({
+    #     'additional_objs' => shipments,
+    #     'additional_objs_name' => 'shipment'
+    #   })
+    # else
+    #   response
+    # end
   end
 
   def add_product
