@@ -18,7 +18,6 @@ gem 'httparty'
 
 group :development do
   gem 'shotgun'
-  #gem 'pry'
   gem 'awesome_print'
 end
 

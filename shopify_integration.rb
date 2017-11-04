@@ -5,10 +5,6 @@ require "httparty"
 require_all 'lib'
 
 class ShopifyIntegration < EndpointBase::Sinatra::Base
-  get '/status' do
-    result 200, 'Shopify Integration Ready'
-  end
-
   post '/products/create' do
     # logger.info "Config=#{@config}"
     # logger.info "Payload=#{@payload}"
