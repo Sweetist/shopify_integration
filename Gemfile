@@ -14,7 +14,6 @@ gem 'capistrano'
 gem 'rest-client'
 gem 'require_all'
 gem 'pry'
-gem 'thin'
 gem 'httparty'
 
 group :development do
@@ -35,7 +34,7 @@ end
 
 group :production do
   gem 'foreman', '0.66.0'
-  #gem 'unicorn'
+  gem 'puma'
 end
 
 gem 'endpoint_base', github: 'misteral/endpoint_base'
