@@ -1,5 +1,5 @@
 GIT
-  remote: git://github.com/misteral/endpoint_base.git
+  remote: https://github.com/misteral/endpoint_base.git
   revision: da5f2365ebd848a09f09093681237011d4c8e714
   specs:
     endpoint_base (0.3)

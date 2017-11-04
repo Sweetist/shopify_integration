@@ -19,6 +19,7 @@ class ShopifyIntegration < EndpointBase::Sinatra::Base
       result 500, e.message
     end
   end
+
   post '/*_shipment' do # /add_shipment or /update_shipment
     summary = Shopify::Shipment.new(@payload['shipment'], @config).ship!
 
@@ -115,23 +116,25 @@ class ShopifyIntegration < EndpointBase::Sinatra::Base
       action_type == 'get' && response['objects'].to_a.size == 0
     end
 
-    def alternate_order_id(payload)
-      payload['recipients'].first['original_order']['denormalized_alternate_order_id']
+    def validate(res)
+      return if res.code == 202
+      raise PushApiError,
+        "Push not successful. Returned response code #{res.code} and message: #{res.body}"
     end
 
     def push(json_payload)
       res = HTTParty.post(
-        'http://localhost:9292/cangaroo/endpoint',
+        ENV['CANGAROO_ENDPOINT'],
         body: json_payload,
         headers: {
           'Content-Type'       => 'application/json',
-          'X-Hub-Store'        => 'secretkey',
-          'X-Hub-Access-Token' => 'secrettoken',
+          'X-Hub-Store'        => ENV['CANGAROO_SECRET_KEY'],
+          'X-Hub-Access-Token' => ENV['CANGAROO_SECRET_TOKEN'],
           'X-Hub-Timestamp'    => Time.now.utc.to_i.to_s
         }
       )
 
-      #validate(res)
+      validate(res)
     end
 
     def add_logs_object(id:, message:, level: 'done', type: 'orders')
@@ -142,3 +145,5 @@ class ShopifyIntegration < EndpointBase::Sinatra::Base
                        type: type
     end
 end
+
+class PushApiError < StandardError; end
