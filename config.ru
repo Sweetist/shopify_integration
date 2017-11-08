@@ -1,6 +1,4 @@
-require 'rubygems'
-require 'bundler'
+$LOAD_PATH.unshift ::File.expand_path(::File.dirname(__FILE__) + '/lib')
+require 'shopify_integration'
 
-Bundler.require(:default)
-require "./shopify_integration"
-run ShopifyIntegration
+run ShopifyIntegration::Server
