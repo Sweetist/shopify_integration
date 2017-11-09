@@ -1,4 +1,22 @@
-Dir['shopify_integration/*.rb'].each { |file| require file }
+require 'shopify_integration/shopify/api_helper'
+require 'shopify_integration/shopify/shipment'
+require 'shopify_integration/shopify_api'
+require 'shopify_integration/variant'
+require 'shopify_integration/version'
+require 'shopify_integration/util'
+require 'shopify_integration/transaction'
+require 'shopify_integration/shipment'
+require 'shopify_integration/product'
+require 'shopify_integration/payment'
+require 'shopify_integration/order'
+require 'shopify_integration/option'
+require 'shopify_integration/metafield'
+require 'shopify_integration/line_item'
+require 'shopify_integration/inventory'
+require 'shopify_integration/image'
+require 'shopify_integration/customer'
+require 'shopify_integration/address'
+
 
 require 'sinatra'
 require 'endpoint_base'
@@ -6,6 +24,11 @@ require 'httparty'
 
 module ShopifyIntegration
   class Server < EndpointBase::Sinatra::Base
+    get '/test_endpoint' do
+      binding.pry
+      result 200, { result: 'ok' }
+    end
+
     post '/products/create' do
       # logger.info "Config=#{@config}"
       # logger.info "Payload=#{@payload}"
@@ -20,7 +43,8 @@ module ShopifyIntegration
       end
     end
 
-    post '/*_shipment' do # /add_shipment or /update_shipment
+    # /add_shipment or /update_shipment
+    post '/*\_shipment' do |_action|
       summary = Shopify::Shipment.new(@payload['shipment'], @config).ship!
 
       result 200, summary
@@ -31,21 +55,22 @@ module ShopifyIntegration
     ## add_ for product, customer
     ## update_ for product, customer
     ## set_inventory
-    post '/*_*' do |action, obj_name|
+    post '/*\_*' do |action, obj_name|
       shopify_action "#{action}_#{obj_name}", obj_name.singularize
     end
 
     private
 
-      def shopify_action action, obj_name
+      def shopify_action(action, obj_name)
           #begin
-          action_type = action.split('_')[0]
 
+          action_type = action.split('_')[0]
           ## Add and update shouldn't come with a shopify_id, therefore when
           ## they do, it indicates Wombat resending an object.
           if wombat_resend_add?(action_type, obj_name) ||
-               update_without_shopify_id?(action_type, obj_name)
-             return result 200
+             update_without_shopify_id?(action_type, obj_name)
+
+            return result 200
           end
 
           shopify = ShopifyAPI.new(@payload, @config)
@@ -64,7 +89,6 @@ module ShopifyIntegration
               ## Add object to Wombat
               add_object obj_name, obj
             end
-            push(@objects.to_json)
             add_parameter 'since', Time.now.utc.iso8601
 
           when 'add'

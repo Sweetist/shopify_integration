@@ -13,8 +13,8 @@ PATH
     shopify_integration (0.1.0)
       endpoint_base (~> 0.3)
       httparty
-      jbuilder (~> 2.0.7)
-      sinatra (~> 2.0.0)
+      rest-client
+      sinatra
       sinatra-logger (~> 0.3.2)
       tilt (~> 2.0.7)
       tilt-jbuilder (~> 0.7.1)
@@ -91,7 +91,6 @@ DEPENDENCIES
   bundler (~> 1.15)
   endpoint_base!
   httparty
-  jbuilder
   minitest (~> 5.0)
   pry
   rack-test
