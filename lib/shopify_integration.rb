@@ -50,6 +50,11 @@ module ShopifyIntegration
       result 200, summary
     end
 
+    ## Make same bellow rquest but with wombat push
+    post '/*\_*\_wombat' do |action, obj_name|
+      shopify_action "#{action}_#{obj_name}", obj_name.singularize, true
+    end
+
     ## Supported endpoints:
     ## get_ for orders, products, inventories, shipments, customers
     ## add_ for product, customer
@@ -59,9 +64,10 @@ module ShopifyIntegration
       shopify_action "#{action}_#{obj_name}", obj_name.singularize
     end
 
+
     private
 
-      def shopify_action(action, obj_name)
+      def shopify_action(action, obj_name, womat_push = false)
           #begin
 
           action_type = action.split('_')[0]
@@ -74,7 +80,7 @@ module ShopifyIntegration
           end
 
           shopify = ShopifyAPI.new(@payload, @config)
-          response  = shopify.send(action)
+          response = shopify.send(action)
 
           case action_type
           when 'get'
@@ -89,7 +95,11 @@ module ShopifyIntegration
               ## Add object to Wombat
               add_object obj_name, obj
             end
+
+            push(@objects.to_json) if womat_push
+
             add_parameter 'since', Time.now.utc.iso8601
+
 
           when 'add'
             ## This will do a partial update in Wombat, only the new key
