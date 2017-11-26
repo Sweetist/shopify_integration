@@ -101,9 +101,9 @@ module ShopifyIntegration
         ],
         'shipping_address' => @shipping_address,
         'billing_address' => @billing_address,
-        'payments' => Util.wombat_array(@payments)
+        'payments' => Util.wombat_array(@payments),
+        'sync_type' => 'shopify'
       }
     end
-
   end
 end
