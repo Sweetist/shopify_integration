@@ -31,7 +31,7 @@ module ShopifyIntegration
       result 200, { result: 'ok' }
     end
 
-    post '/products/create' do
+    post '/order_callback' do
       # logger.info "Config=#{@config}"
       # logger.info "Payload=#{@payload}"
       begin
