@@ -17,7 +17,7 @@ class ShopifyIntegrationTest < Minitest::Test
   end
 
   def test_respond_ok_for_callback
-    payload = load_fixture('callback_payload.json')
+    payload = load_fixture('create_order_callback.json')
     mock = Minitest::Mock.new
     def mock.code; 202; end
 
