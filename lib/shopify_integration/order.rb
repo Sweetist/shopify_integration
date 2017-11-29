@@ -21,14 +21,14 @@ module ShopifyIntegration
       end
       @payments = Array.new
       @totals_payment = 0.00
-      shopify_api.transactions(@shopify_id).each do |transaction|
-        if (transaction.kind == 'capture' or transaction.kind == 'sale') and
-            transaction.status == 'success'
-          @totals_payment += transaction.amount.to_f
-          payment = Payment.new
-          @payments << payment.add_shopify_obj(transaction, shopify_api)
-        end
-      end
+      # shopify_api.transactions(@shopify_id).each do |transaction|
+      #   if (transaction.kind == 'capture' or transaction.kind == 'sale') and
+      #       transaction.status == 'success'
+      #     @totals_payment += transaction.amount.to_f
+      #     payment = Payment.new
+      #     @payments << payment.add_shopify_obj(transaction, shopify_api)
+      #   end
+      # end
       @totals_order = shopify_order['total_price'].to_f
       @line_items = Array.new
       shopify_order['line_items'].each do |shopify_li|

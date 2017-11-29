@@ -35,7 +35,53 @@ module ShopifyIntegration
       # logger.info "Config=#{@config}"
       # logger.info "Payload=#{@payload}"
       begin
-        push(@payload.to_json)
+        #push(@payload.to_json)
+        @config = { "shopify_host" => "sweet-shopify.myshopify.com"}
+        api = ShopifyAPI.new(@payload, @config)
+        order = ShopifyIntegration::Order.new
+        order.add_shopify_obj @payload, api
+        add_object Order, order.wombat_obj
+        push(@objects.to_json)
+
+        result 200, 'Callback from shipping easy'
+      rescue => e
+        logger.error e.cause
+        logger.error e.backtrace.join("\n")
+        result 500, e.message
+      end
+    end
+
+    post '/product_callback' do
+      # logger.info "Config=#{@config}"
+      # logger.info "Payload=#{@payload}"
+      begin
+        #push(@payload.to_json)
+        @config = { "shopify_host" => "sweet-shopify.myshopify.com"}
+        api = ShopifyAPI.new(@payload, @config)
+        product = ShopifyIntegration::Product.new
+        product.add_shopify_obj @payload, api
+        add_object Product, product.wombat_obj
+        push(@objects.to_json)
+
+        result 200, 'Callback from shipping easy'
+      rescue => e
+        logger.error e.cause
+        logger.error e.backtrace.join("\n")
+        result 500, e.message
+      end
+    end
+
+    post '/customer_callback' do
+      # logger.info "Config=#{@config}"
+      # logger.info "Payload=#{@payload}"
+      begin
+        #push(@payload.to_json)
+        @config = { "shopify_host" => "sweet-shopify.myshopify.com"}
+        api = ShopifyAPI.new(@payload, @config)
+        customer = ShopifyIntegration::Customer.new
+        customer.add_shopify_obj @payload, api
+        add_object Customer, customer.wombat_obj
+        push(@objects.to_json)
 
         result 200, 'Callback from shipping easy'
       rescue => e
