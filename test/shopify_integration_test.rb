@@ -33,6 +33,40 @@ class ShopifyIntegrationTest < Minitest::Test
     # assert_equal order_body['id'], 'R1-R572547556'
   end
 
+  def test_respond_ok_for_create_product_callback
+    payload = load_fixture('create_product_callback.json')
+    mock = Minitest::Mock.new
+    def mock.code; 202; end
+
+    HTTParty.stub :post, mock do
+      post '/product_callback', payload
+    end
+
+    assert last_response.ok?
+    # parsed_body = JSON.parse(last_response.body)
+    # order_body = parsed_body['orders'].first
+
+    # assert parsed_body['orders'].size == 1
+    # assert_equal order_body['id'], 'R1-R572547556'
+  end
+
+  def test_respond_ok_for_create_customer_callback
+    payload = load_fixture('create_customer_callback.json')
+    mock = Minitest::Mock.new
+    def mock.code; 202; end
+
+    HTTParty.stub :post, mock do
+      post '/customer_callback', payload
+    end
+
+    assert last_response.ok?
+    # parsed_body = JSON.parse(last_response.body)
+    # order_body = parsed_body['orders'].first
+
+    # assert parsed_body['orders'].size == 1
+    # assert_equal order_body['id'], 'R1-R572547556'
+  end
+
   # def test_endpoint
   #   get '/test_endpoint'
   #   assert last_response.ok?
