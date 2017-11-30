@@ -31,68 +31,15 @@ module ShopifyIntegration
       result 200, { result: 'ok' }
     end
 
-    post '/order_callback' do
-      # logger.info "Config=#{@config}"
-      # logger.info "Payload=#{@payload}"
-      begin
-        @config = { "shopify_host" => request.env['HTTP_X_SHOPIFY_SHOP_DOMAIN'] }
-        api = ShopifyAPI.new(@payload, @config)
-        order = ShopifyIntegration::Order.new
-        order.add_shopify_obj @payload, api
-        add_object :order, order.wombat_obj
-        push(@objects.to_json)
-
-        result 200, 'Callback from shipping easy'
-      rescue => e
-        logger.error e.cause
-        logger.error e.backtrace.join("\n")
-        result 500, e.message
-      end
-    end
-
-    post '/product_callback' do
-      # logger.info "Config=#{@config}"
-      # logger.info "Payload=#{@payload}"
-      begin
-        @config = { "shopify_host" => request.env['HTTP_X_SHOPIFY_SHOP_DOMAIN'] }
-        api = ShopifyAPI.new(@payload, @config)
-        product = ShopifyIntegration::Product.new
-        product.add_shopify_obj @payload, api
-        add_object :product, product.wombat_obj
-        push(@objects.to_json)
-
-        result 200, 'Callback from shipping easy'
-      rescue => e
-        logger.error e.cause
-        logger.error e.backtrace.join("\n")
-        result 500, e.message
-      end
-    end
-
-    post '/customer_callback' do
-      # logger.info "Config=#{@config}"
-      # logger.info "Payload=#{@payload}"
-      begin
-        @config = { "shopify_host" => request.env['HTTP_X_SHOPIFY_SHOP_DOMAIN'] }
-        api = ShopifyAPI.new(@payload, @config)
-        customer = ShopifyIntegration::Customer.new
-        customer.add_shopify_obj @payload, api
-        add_object :customer, customer.wombat_obj
-        push(@objects.to_json)
-
-        result 200, 'Callback from shipping easy'
-      rescue => e
-        logger.error e.cause
-        logger.error e.backtrace.join("\n")
-        result 500, e.message
-      end
-    end
-
     # /add_shipment or /update_shipment
     post '/*\_shipment' do |_action|
       summary = Shopify::Shipment.new(@payload['shipment'], @config).ship!
 
       result 200, summary
+    end
+
+    post '/*\_callback' do |obj_name|
+      shopify_webhook obj_name
     end
 
     ## Supported endpoints:
@@ -106,6 +53,23 @@ module ShopifyIntegration
 
 
     private
+
+    def shopify_webhook obj_name
+      begin
+        @config = { 'shopify_host' => request.env['HTTP_X_SHOPIFY_SHOP_DOMAIN'] }
+        api = ShopifyAPI.new(@payload, @config)
+        obj = "ShopifyIntegration::#{obj_name.capitalize}".safe_constantize.new
+        obj.add_shopify_obj @payload, api
+        add_object obj_name, obj.wombat_obj
+        push(@objects.to_json)
+
+        result 200, 'Callback from shipping easy'
+      rescue => e
+        logger.error e.cause
+        logger.error e.backtrace.join("\n")
+        result 500, e.message
+      end
+    end
 
     def shopify_action(action, obj_name)
       begin
