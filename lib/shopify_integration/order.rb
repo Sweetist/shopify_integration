@@ -8,7 +8,7 @@ module ShopifyIntegration
       @order_number = shopify_order['order_number']
       @shopify_id = shopify_order['id']
       @source = Util.shopify_host shopify_api.config
-      @status = 'completed'
+      @status = Util.shopify_status shopify_api.config
       @email = shopify_order['email']
       @currency = shopify_order['currency']
       @placed_on = shopify_order['created_at']
