@@ -42,8 +42,9 @@ module ShopifyIntegration
     end
 
     def self.shopify_status wombat_status
+      return 'completed' unless wombat_status['status']
       status = wombat_status['status'].split('/')[1]
-      (status == 'canceled') ? 'canceled' : 'completed'
+      status == 'canceled' ? 'canceled' : 'completed'
     end
 
     def self.shopify_apikey wombat_config
@@ -57,6 +58,5 @@ module ShopifyIntegration
     def self.shopify_host wombat_config
       wombat_config['shopify_host']
     end
-
   end
 end
