@@ -33,8 +33,8 @@ module ShopifyIntegration
       end
 
       def final_resource resource
-        if !@config['since'].nil?
-          resource += ".json?updated_at_min=#{@config['since']}"
+        if !@payload['request']['since'].nil?
+          resource += ".json?updated_at_min=#{@payload['request']['since']}"
         elsif !@config['id'].nil?
           resource += "/#{@config['id']}.json"
         else
