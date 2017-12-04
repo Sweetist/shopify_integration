@@ -30,7 +30,8 @@ module ShopifyIntegration
         'lastname' => @lastname,
         'email' => @email,
         'shipping_address' => @default_address.wombat_obj,
-        'billing_address' => @default_address.wombat_obj
+        'billing_address' => @default_address.wombat_obj,
+        'sync_type' => 'shopify'
       }
     end
 
