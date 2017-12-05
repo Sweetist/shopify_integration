@@ -27,7 +27,7 @@ class ShopifyIntegrationTest < Minitest::Test
     end
 
     assert last_response.ok?
-    order_body = JSON.parse(last_response.body).dig('orders').first
+    order_body = JSON.parse(last_response.body)['orders'].first
     refute_nil order_body['line_items']
     assert_equal order_body['sync_type'], 'shopify'
   end
@@ -43,8 +43,8 @@ class ShopifyIntegrationTest < Minitest::Test
     end
 
     assert last_response.ok?
-    product_body = JSON.parse(last_response.body).dig('products').first
-    inventories_body = JSON.parse(last_response.body).dig('inventories')
+    product_body = JSON.parse(last_response.body)['products'].first
+    inventories_body = JSON.parse(last_response.body)['inventories']
     assert_equal product_body['id'], '788032119674292900'
     refute_nil inventories_body
   end
