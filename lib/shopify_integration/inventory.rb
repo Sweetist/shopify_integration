@@ -8,7 +8,7 @@ module ShopifyIntegration
       @shopify_id = variant.shopify_id
       @shopify_parent_id = variant.shopify_parent_id
       @quantity = variant.quantity
-
+      @inventory_management = variant.inventory_management
       self
     end
 
@@ -28,7 +28,8 @@ module ShopifyIntegration
         'product_id' => @sku,
         'shopify_id' => @shopify_id,
         'shopify_parent_id' => @shopify_parent_id.to_s,
-        'quantity' => @quantity
+        'quantity' => @quantity,
+        'inventory_management' => @inventory_management
       }
     end
 

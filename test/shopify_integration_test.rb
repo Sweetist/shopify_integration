@@ -17,44 +17,45 @@ class ShopifyIntegrationTest < Minitest::Test
   end
 
   def test_respond_ok_for_order_callback
-    payload = load_fixture('create_order_callback.json')
+    payload = load_fixture('order_object.json')
     mock = Minitest::Mock.new
     def mock.code; 202; end
 
     HTTParty.stub :post, mock do
-      binding.pry
+      header 'X_SHOPIFY_SHOP_DOMAIN', 'test.com'
       post '/order_callback', payload
     end
 
     assert last_response.ok?
-    # parsed_body = JSON.parse(last_response.body)
-    # order_body = parsed_body['ShopifyIntegration::Orders'].first
-
-    # assert_equal order_body['id'], 'SWEET-SHOPIFY-1007'
+    order_body = JSON.parse(last_response.body).dig('orders').first
+    refute_nil order_body['line_items']
+    assert_equal order_body['sync_type'], 'shopify'
   end
 
   def test_respond_ok_for_create_product_callback
-    payload = load_fixture('create_product_callback.json')
+    payload = load_fixture('product_object.json')
     mock = Minitest::Mock.new
     def mock.code; 202; end
 
     HTTParty.stub :post, mock do
+      header 'X_SHOPIFY_SHOP_DOMAIN', 'test.com'
       post '/product_callback', payload
     end
 
     assert last_response.ok?
-    parsed_body = JSON.parse(last_response.body)
-    product_body = parsed_body['products'].first
+    product_body = JSON.parse(last_response.body).dig('products').first
 
     assert_equal product_body['id'], '788032119674292900'
+
   end
 
   def test_respond_ok_for_create_customer_callback
-    payload = load_fixture('create_customer_callback.json')
+    payload = load_fixture('customer_object.json')
     mock = Minitest::Mock.new
     def mock.code; 202; end
 
     HTTParty.stub :post, mock do
+      header 'X_SHOPIFY_SHOP_DOMAIN', 'test.com'
       post '/customer_callback', payload
     end
 

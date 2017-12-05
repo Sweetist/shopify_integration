@@ -26,11 +26,6 @@ module ShopifyIntegration
   class Server < EndpointBase::Sinatra::Base
     SYNC_TYPE = 'shopify'.freeze
 
-    get '/test_endpoint' do
-      binding.pry
-      result 200, { result: 'ok' }
-    end
-
     # /add_shipment or /update_shipment
     post '/*\_shipment' do |_action|
       summary = Shopify::Shipment.new(@payload['shipment'], @config).ship!
@@ -54,22 +49,21 @@ module ShopifyIntegration
 
     private
 
-    def shopify_webhook obj_name
-      begin
-        @config = { 'shopify_host' => request.env['HTTP_X_SHOPIFY_SHOP_DOMAIN'],
-                    'status' => request.env['HTTP_X_SHOPIFY_TOPIC'] }
-        api = ShopifyAPI.new(@payload, @config)
-        obj = "ShopifyIntegration::#{obj_name.capitalize}".safe_constantize.new
-        obj.add_shopify_obj @payload, api
-        add_object obj_name, obj.wombat_obj
-        push(@objects.to_json)
+    def shopify_webhook(obj_name)
+      @config = { 'shopify_host' => request.env['HTTP_X_SHOPIFY_SHOP_DOMAIN'],
+                  'status' => request.env['HTTP_X_SHOPIFY_TOPIC'] }
+      api = ShopifyAPI.new(@payload, @config)
+      obj = "ShopifyIntegration::#{obj_name.capitalize}".safe_constantize.new
+      obj.add_shopify_obj @payload, api
+      add_object obj_name, obj.wombat_obj
+      push(@objects.to_json)
 
-        result 200, 'Callback from shipping easy'
-      rescue => e
-        logger.error e.cause
-        logger.error e.backtrace.join("\n")
-        result 500, e.message
-      end
+      result 200, 'Callback from shipping easy'
+    rescue PushApiError => e
+      logger.error e.cause
+      logger.error e.backtrace.join("\n")
+      p e.backtrace.join("\n")
+      result 500, e.message
     end
 
     def shopify_action(action, obj_name)

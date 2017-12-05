@@ -8,6 +8,7 @@ module ShopifyIntegration
       @shopify_parent_id = shopify_variant['product_id']
       @name = shopify_variant['title']
       @sku = shopify_variant['sku']
+      @inventory_management = shopify_variant['inventory_management']
       @price = shopify_variant['price'].to_f
       @shipping_category = shopify_variant['requires_shipping'] ?
                             'Shipping Required' : 'Shipping Not Required'
@@ -77,9 +78,9 @@ module ShopifyIntegration
         'shipping_category' => @shipping_category,
         'price' => @price,
         'quantity' => @quantity,
-        'options' => @options
+        'options' => @options,
+        'inventory_management' => @inventory_management
       }
     end
-
   end
 end
