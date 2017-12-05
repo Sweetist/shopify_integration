@@ -33,8 +33,10 @@ module ShopifyIntegration
       result 200, summary
     end
 
+    ## Supported callbacks:
+    ## order, product, customer _callback
     post '/*\_callback' do |obj_name|
-      shopify_webhook obj_name
+      callback_handle obj_name
     end
 
     ## Supported endpoints:
@@ -49,13 +51,21 @@ module ShopifyIntegration
 
     private
 
-    def shopify_webhook(obj_name)
+    def callback_handle(obj_name)
       @config = { 'shopify_host' => request.env['HTTP_X_SHOPIFY_SHOP_DOMAIN'],
                   'status' => request.env['HTTP_X_SHOPIFY_TOPIC'] }
       api = ShopifyAPI.new(@payload, @config)
       obj = "ShopifyIntegration::#{obj_name.capitalize}".safe_constantize.new
       obj.add_shopify_obj @payload, api
       add_object obj_name, obj.wombat_obj
+      if obj_name == 'product' && obj.variants.any?
+        obj.variants.each do |variant|
+          next if variant.sku.blank?
+          inventory = Inventory.new
+          inventory.add_obj variant
+          add_object :inventory, inventory.wombat_obj
+        end
+      end
       push(@objects.to_json)
 
       result 200, 'Callback from shipping easy'

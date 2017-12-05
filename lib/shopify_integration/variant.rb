@@ -1,7 +1,8 @@
 module ShopifyIntegration
   class Variant
     attr_reader :shopify_id, :shopify_parent_id, :quantity, :images,
-                :sku, :price, :options, :shipping_category, :name
+                :sku, :price, :options, :shipping_category, :name,
+                :inventory_management
 
     def add_shopify_obj shopify_variant, shopify_options
       @shopify_id = shopify_variant['id']

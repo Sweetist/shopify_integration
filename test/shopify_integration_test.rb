@@ -44,9 +44,9 @@ class ShopifyIntegrationTest < Minitest::Test
 
     assert last_response.ok?
     product_body = JSON.parse(last_response.body).dig('products').first
-
+    inventories_body = JSON.parse(last_response.body).dig('inventories')
     assert_equal product_body['id'], '788032119674292900'
-
+    refute_nil inventories_body
   end
 
   def test_respond_ok_for_create_customer_callback
