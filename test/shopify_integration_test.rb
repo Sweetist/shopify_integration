@@ -28,8 +28,9 @@ class ShopifyIntegrationTest < Minitest::Test
 
     assert last_response.ok?
     order_body = JSON.parse(last_response.body)['orders'].first
+    params_body = JSON.parse(last_response.body)['parameters']
     refute_nil order_body['line_items']
-    assert_equal order_body['sync_type'], 'shopify'
+    assert_equal params_body['sync_type'], 'shopify'
   end
 
   def test_respond_ok_for_create_product_callback

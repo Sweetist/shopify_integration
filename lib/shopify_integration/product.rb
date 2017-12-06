@@ -95,8 +95,7 @@ module ShopifyIntegration
         'meta_description' => @description,
         'options' => Util.wombat_array(@options),
         'variants' => Util.wombat_array(@variants),
-        'images' => Util.wombat_array(@images),
-        'sync_type' => 'shopify'
+        'images' => Util.wombat_array(@images)
       }
     end
 

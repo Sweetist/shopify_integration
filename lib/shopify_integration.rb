@@ -66,13 +66,14 @@ module ShopifyIntegration
           add_object :inventory, inventory.wombat_obj
         end
       end
-      push(@objects.to_json)
+      add_parameter 'sync_type', 'shopify'
+      push(@objects.merge('parameters' => @parameters).to_json)
 
       result 200, 'Callback from shipping easy'
     rescue PushApiError => e
       logger.error e.cause
       logger.error e.backtrace.join("\n")
-      p e.backtrace.join("\n")
+      # p e.backtrace.join("\n")
       result 500, e.message
     end
 
@@ -183,30 +184,30 @@ module ShopifyIntegration
       validate(res)
     end
 
-    def integration_params
-      return unless @payload['request']
-      return unless @payload['request']['integration_params']
-      @payload['request']['integration_params']
-    end
+    # def integration_params
+    #   return unless @payload['request']
+    #   return unless @payload['request']['integration_params']
+    #   @payload['request']['integration_params']
+    # end
 
-    def sync_action
-      return '' unless integration_params
-      integration_params['sync_action'] || ''
-    end
+    # def sync_action
+    #   return '' unless integration_params
+    #   integration_params['sync_action'] || ''
+    # end
 
-    def add_integration_params
-      add_value 'sync_action', sync_action
-      add_value 'sync_type', SYNC_TYPE
-    end
+    # def add_integration_params
+    #   add_value 'sync_action', sync_action
+    #   add_value 'sync_type', SYNC_TYPE
+    # end
 
-    def add_logs_object(id:, message:, level: 'done', type: 'orders')
-      add_object :log, id: id,
-                       sync_type: SYNC_TYPE,
-                       sync_action: sync_action || '',
-                       level: level,
-                       message: message,
-                       type: type
-    end
+    # def add_logs_object(id:, message:, level: 'done', type: 'orders')
+    #   add_object :log, id: id,
+    #                    sync_type: SYNC_TYPE,
+    #                    sync_action: sync_action || '',
+    #                    level: level,
+    #                    message: message,
+    #                    type: type
+    # end
   end
 
   class PushApiError < StandardError; end

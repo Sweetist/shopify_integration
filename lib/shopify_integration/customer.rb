@@ -1,24 +1,29 @@
 module ShopifyIntegration
   class Customer
-
     attr_reader :shopify_id
 
-    def add_shopify_obj shopify_customer, shopify_api
+    def add_shopify_obj(shopify_customer, shopify_api)
       @shopify_id = shopify_customer['id']
       @firstname = shopify_customer['first_name']
       @lastname = shopify_customer['last_name']
       @email = shopify_customer['email']
-      @default_address = Address.new.add_shopify_obj(shopify_customer['default_address'])
+      @default_address = Address
+                         .new
+                         .add_shopify_obj(shopify_customer['default_address'])
       @source = Util.shopify_host shopify_api.config
     end
 
-    def add_wombat_obj wombat_customer, shopfiy_api
+    def add_wombat_obj(wombat_customer, _shopfiy_api)
       @shopify_id = wombat_customer['shopify_id']
       @firstname = wombat_customer['firstname']
       @lastname = wombat_customer['lastname']
       @email = wombat_customer['email']
-      @shipping_address = Address.new.add_wombat_obj(wombat_customer['shipping_address'])
-      @billing_address = Address.new.add_wombat_obj(wombat_customer['billing_address'])
+      @shipping_address = Address
+                          .new
+                          .add_wombat_obj(wombat_customer['shipping_address'])
+      @billing_address = Address
+                         .new
+                         .add_wombat_obj(wombat_customer['billing_address'])
     end
 
     def wombat_obj
@@ -30,8 +35,7 @@ module ShopifyIntegration
         'lastname' => @lastname,
         'email' => @email,
         'shipping_address' => @default_address.wombat_obj,
-        'billing_address' => @default_address.wombat_obj,
-        'sync_type' => 'shopify'
+        'billing_address' => @default_address.wombat_obj
       }
     end
 
@@ -48,6 +52,5 @@ module ShopifyIntegration
         }
       }
     end
-
   end
 end
