@@ -66,7 +66,7 @@ module ShopifyIntegration
           add_object :inventory, inventory.wombat_obj
         end
       end
-      add_parameter 'sync_type', 'shopify'
+      add_integration_params
       push(@objects.merge('parameters' => @parameters).to_json)
 
       result 200, 'Callback from shipping easy'
@@ -105,7 +105,6 @@ module ShopifyIntegration
             add_object obj_name, obj
           end
 
-          add_integration_params
 
         when 'add'
           ## This will do a partial update in Wombat, only the new key
@@ -119,6 +118,7 @@ module ShopifyIntegration
                                 response['objects'][obj_name]['id'].to_s,
                                 @payload[obj_name]['id']
         end
+        add_integration_params
 
         if response.has_key?('additional_objs') &&
            response.has_key?('additional_objs_name')
@@ -136,8 +136,15 @@ module ShopifyIntegration
       rescue => e
         print e.cause
         print e.backtrace.join("\n")
-        result 500, (e.try(:response) ? e.response : e.message)
+        result 500, (e.try(:response) ? e.response : response_for_error(error))
       end
+    end
+
+    def response_for_error(error)
+      {
+        message: error.message,
+        backtrace: error.backtrace
+      }
     end
 
     def wombat_resend_add?(action_type, obj_name)
@@ -178,13 +185,17 @@ module ShopifyIntegration
     end
 
     def add_integration_params
-      add_value 'sync_action', sync_action
-      add_value 'sync_type', SYNC_TYPE
+      add_parameter 'sync_action', sync_action
+      add_parameter 'sync_type', SYNC_TYPE
+      add_parameter 'vendor', vendor
     end
 
     def sync_action
-      return '' unless integration_params
-      integration_params['sync_action'] || ''
+      @config['sync_action']
+    end
+
+    def vendor
+      @config['vendor']
     end
   end
 
