@@ -103,16 +103,9 @@ module ShopifyIntegration
 
             ## Add object to Wombat
             add_object obj_name, obj
-            # add_logs_object(id: obj['id'],
-            #                 message: "Object #{obj['id']} sended to Integrator",
-            #                 type: obj_name)
           end
 
           add_integration_params
-          add_parameter 'since', Time.now.utc.iso8601
-          # add_logs_object(id: 'none',
-          #                 message: "Sended to Integrator #{response['objects'].size} orders",
-          #                 type: 'response')
 
         when 'add'
           ## This will do a partial update in Wombat, only the new key
@@ -184,6 +177,11 @@ module ShopifyIntegration
       validate(res)
     end
 
+    def add_integration_params
+      add_value 'sync_action', sync_action
+      add_value 'sync_type', SYNC_TYPE
+    end
+
     # def integration_params
     #   return unless @payload['request']
     #   return unless @payload['request']['integration_params']
@@ -195,10 +193,6 @@ module ShopifyIntegration
     #   integration_params['sync_action'] || ''
     # end
 
-    # def add_integration_params
-    #   add_value 'sync_action', sync_action
-    #   add_value 'sync_type', SYNC_TYPE
-    # end
 
     # def add_logs_object(id:, message:, level: 'done', type: 'orders')
     #   add_object :log, id: id,
