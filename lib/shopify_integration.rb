@@ -182,26 +182,10 @@ module ShopifyIntegration
       add_value 'sync_type', SYNC_TYPE
     end
 
-    # def integration_params
-    #   return unless @payload['request']
-    #   return unless @payload['request']['integration_params']
-    #   @payload['request']['integration_params']
-    # end
-
-    # def sync_action
-    #   return '' unless integration_params
-    #   integration_params['sync_action'] || ''
-    # end
-
-
-    # def add_logs_object(id:, message:, level: 'done', type: 'orders')
-    #   add_object :log, id: id,
-    #                    sync_type: SYNC_TYPE,
-    #                    sync_action: sync_action || '',
-    #                    level: level,
-    #                    message: message,
-    #                    type: type
-    # end
+    def sync_action
+      return '' unless integration_params
+      integration_params['sync_action'] || ''
+    end
   end
 
   class PushApiError < StandardError; end
