@@ -1,0 +1,16 @@
+{
+	"request_id": "12096bf7-7bde-425d-8310-fd906dec110e",
+	"parameters": {
+		"shopify_apikey": "7aab133abf294c3ade7a6b4ce9c99c0b",
+		"shopify_password": "a2bc1483adf9dbae35774977e17c3dd9",
+		"shopify_host": "sweet-shopify.myshopify.com",
+		"vendor": 1,
+		"sync_type": "shopify",
+		"sync_action": 95
+	},
+
+	"request": {
+		"id": "shopify",
+		"query": "get_orders"
+	}
+}

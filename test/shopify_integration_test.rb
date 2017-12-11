@@ -67,6 +67,22 @@ class ShopifyIntegrationTest < Minitest::Test
     assert_equal customer_body['id'], '706405506930370000'
   end
 
+  def test_respond_ok_for_get_orders
+    payload = load_fixture('get_orders_request_from_sweet.json')
+    response = load_fixture('get_orders_response_from_shopify.json')
+
+    RestClient.stub :get, response do
+      post '/get_orders', payload
+    end
+
+    assert last_response.ok?
+    order_body = JSON.parse(last_response.body)['orders'].first
+    params_body = JSON.parse(last_response.body)['parameters']
+    assert_equal params_body['sync_type'], 'shopify'
+    refute_nil order_body['line_items']
+    refute_empty order_body['shopify_id']
+  end
+
   # def test_endpoint
   #   get '/test_endpoint'
   #   assert last_response.ok?
