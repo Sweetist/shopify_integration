@@ -9,7 +9,7 @@ module ShopifyIntegration
       end
 
       def ship!
-        if @shipment['status'] == "shipped" && shopify_order_id
+        if @shipment['status'] == 'received' && shopify_order_id
           begin
             api_post(
               "orders/#{shopify_order_id}/fulfillments.json",
@@ -28,7 +28,9 @@ module ShopifyIntegration
       end
 
       def shopify_order_id
-        @shopify_order_id ||= @shipment['shopify_order_id'] || find_order_id_by_order_number(@shipment['order_id'])
+        @shopify_order_id ||= @shipment['shopify_order_id']         \
+          || find_order_id_by_order_number(@shipment['order_id'])   \
+          || @config.dig('sync_id')
       end
 
       def find_order_id_by_order_number(order_number)

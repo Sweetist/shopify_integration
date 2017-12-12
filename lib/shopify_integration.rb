@@ -28,7 +28,7 @@ module ShopifyIntegration
 
     # /add_shipment or /update_shipment
     post '/*\_shipment' do |_action|
-      summary = Shopify::Shipment.new(@payload['shipment'], @config).ship!
+      summary = Shopify::Shipment.new(@payload['order']['shipments'].first, @config).ship!
 
       result 200, summary
     end
