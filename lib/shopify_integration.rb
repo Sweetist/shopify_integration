@@ -79,7 +79,6 @@ module ShopifyIntegration
 
     def shopify_action(action, obj_name)
       begin
-
         action_type = action.split('_')[0]
         ## Add and update shouldn't come with a shopify_id, therefore when
         ## they do, it indicates Wombat resending an object.
@@ -104,7 +103,6 @@ module ShopifyIntegration
             ## Add object to Wombat
             add_object obj_name, obj
           end
-
 
         when 'add'
           ## This will do a partial update in Wombat, only the new key
