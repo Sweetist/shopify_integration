@@ -8,7 +8,8 @@ module ShopifyIntegration
       @order_number = shopify_order['order_number']
       @shopify_id = shopify_order['id']
       @source = Util.shopify_host shopify_api.config
-      @status = 'completed'
+      @canceled_date = shopify_order['cancelled_at']
+      @status = order_status
       @email = shopify_order['email']
       @currency = shopify_order['currency']
       @placed_on = shopify_order['created_at']
@@ -35,6 +36,7 @@ module ShopifyIntegration
         line_item = LineItem.new
         @line_items << line_item.add_shopify_obj(shopify_li, shopify_api)
       end
+
 
       unless shopify_order['shipping_address'].nil?
         @shipping_address = {
@@ -65,6 +67,11 @@ module ShopifyIntegration
       end
 
       self
+    end
+
+    def order_status
+      return 'cancelled' if @canceled_date
+      'completed'
     end
 
     def wombat_obj

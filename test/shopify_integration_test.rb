@@ -31,6 +31,7 @@ class ShopifyIntegrationTest < Minitest::Test
     params_body = JSON.parse(last_response.body)['parameters']
     refute_nil order_body['line_items']
     assert_equal params_body['sync_type'], 'shopify'
+    assert_equal order_body['status'], 'completed'
   end
 
   def test_respond_ok_for_create_product_callback
@@ -81,6 +82,21 @@ class ShopifyIntegrationTest < Minitest::Test
     assert_equal params_body['sync_type'], 'shopify'
     refute_nil order_body['line_items']
     refute_empty order_body['shopify_id']
+  end
+
+  def test_respond_right_cancel_status
+    payload = load_fixture('cancel_order_shopify_payload.json')
+    mock = Minitest::Mock.new
+    def mock.code; 202; end
+
+    HTTParty.stub :post, mock do
+      header 'X_SHOPIFY_SHOP_DOMAIN', 'test.com'
+      post '/order_callback', payload
+    end
+
+    assert last_response.ok?
+    response = JSON.parse(last_response.body)
+    assert_equal response['orders'].first['status'], 'cancelled'
   end
 
   # def test_endpoint

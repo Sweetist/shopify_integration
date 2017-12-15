@@ -1,0 +1,335 @@
+{
+    "id": 246889021467,
+    "email": "test@customer.com",
+    "closed_at": null,
+    "created_at": "2017-12-12T12:29:12-05:00",
+    "updated_at": "2017-12-14T05:34:33-05:00",
+    "number": 43,
+    "note": null,
+    "token": "90c83d3b775429b70e7818cf66abb120",
+    "gateway": "manual",
+    "test": false,
+    "total_price": "511.71",
+    "subtotal_price": "470.00",
+    "total_weight": 0,
+    "total_tax": "41.71",
+    "taxes_included": false,
+    "currency": "USD",
+    "financial_status": "refunded",
+    "confirmed": true,
+    "total_discounts": "0.00",
+    "total_line_items_price": "470.00",
+    "cart_token": null,
+    "buyer_accepts_marketing": false,
+    "name": "#1043",
+    "referring_site": null,
+    "landing_site": null,
+    "cancelled_at": "2017-12-14T05:34:33-05:00",
+    "cancel_reason": "customer",
+    "total_price_usd": "511.71",
+    "checkout_token": null,
+    "reference": null,
+    "user_id": 3454828571,
+    "location_id": null,
+    "source_identifier": null,
+    "source_url": null,
+    "processed_at": "2017-12-12T12:29:12-05:00",
+    "device_id": null,
+    "phone": null,
+    "customer_locale": null,
+    "app_id": 1354745,
+    "browser_ip": null,
+    "landing_site_ref": null,
+    "order_number": 1043,
+    "discount_codes": [],
+    "note_attributes": [],
+    "payment_gateway_names": [
+        "manual"
+    ],
+    "processing_method": "manual",
+    "checkout_id": null,
+    "source_name": "shopify_draft_order",
+    "fulfillment_status": null,
+    "tax_lines": [
+        {
+            "title": "NY State Tax",
+            "price": "18.80",
+            "rate": 0.04
+        },
+        {
+            "title": "New York County Tax",
+            "price": "22.91",
+            "rate": 0.04875
+        }
+    ],
+    "tags": "",
+    "contact_email": "test@customer.com",
+    "order_status_url": "https://checkout.shopify.com/24470507/orders/90c83d3b775429b70e7818cf66abb120/authenticate?key=580d2c577ee0cc6dbd04fb036394a1b7",
+    "line_items": [
+        {
+            "id": 484494606363,
+            "variant_id": 5212117925915,
+            "title": "Shopify test2",
+            "quantity": 5,
+            "price": "88.00",
+            "sku": "ktr-4",
+            "variant_title": "26 / blue",
+            "vendor": "sweet_shopify",
+            "fulfillment_service": "manual",
+            "product_id": 436098695195,
+            "requires_shipping": true,
+            "taxable": true,
+            "gift_card": false,
+            "name": "Shopify test2 - 26 / blue",
+            "variant_inventory_management": null,
+            "properties": [],
+            "product_exists": true,
+            "fulfillable_quantity": 0,
+            "grams": 0,
+            "total_discount": "0.00",
+            "fulfillment_status": null,
+            "tax_lines": [
+                {
+                    "title": "NY State Tax",
+                    "price": "17.60",
+                    "rate": 0.04
+                },
+                {
+                    "title": "New York County Tax",
+                    "price": "21.45",
+                    "rate": 0.04875
+                }
+            ]
+        },
+        {
+            "id": 484494639131,
+            "variant_id": 5034213474331,
+            "title": "Test product from Shopify",
+            "quantity": 3,
+            "price": "10.00",
+            "sku": "sku-tt",
+            "variant_title": "26 / White",
+            "vendor": "sweet_shopify",
+            "fulfillment_service": "manual",
+            "product_id": 303074639899,
+            "requires_shipping": true,
+            "taxable": true,
+            "gift_card": false,
+            "name": "Test product from Shopify - 26 / White",
+            "variant_inventory_management": null,
+            "properties": [],
+            "product_exists": true,
+            "fulfillable_quantity": 0,
+            "grams": 0,
+            "total_discount": "0.00",
+            "fulfillment_status": null,
+            "tax_lines": [
+                {
+                    "title": "NY State Tax",
+                    "price": "1.20",
+                    "rate": 0.04
+                },
+                {
+                    "title": "New York County Tax",
+                    "price": "1.46",
+                    "rate": 0.04875
+                }
+            ]
+        }
+    ],
+    "shipping_lines": [],
+    "billing_address": {
+        "first_name": "New",
+        "address1": "NY 1001",
+        "phone": null,
+        "city": "New York",
+        "zip": "10016",
+        "province": "New York",
+        "country": "United States",
+        "last_name": "Customer",
+        "address2": "22-3",
+        "company": null,
+        "latitude": 40.74727,
+        "longitude": -73.9800645,
+        "name": "New Customer",
+        "country_code": "US",
+        "province_code": "NY"
+    },
+    "shipping_address": {
+        "first_name": "New",
+        "address1": "NY 1001",
+        "phone": null,
+        "city": "New York",
+        "zip": "10016",
+        "province": "New York",
+        "country": "United States",
+        "last_name": "Customer",
+        "address2": "22-3",
+        "company": null,
+        "latitude": 40.74727,
+        "longitude": -73.9800645,
+        "name": "New Customer",
+        "country_code": "US",
+        "province_code": "NY"
+    },
+    "fulfillments": [],
+    "refunds": [
+        {
+            "id": 10169286683,
+            "order_id": 246889021467,
+            "created_at": "2017-12-14T05:34:33-05:00",
+            "note": null,
+            "restock": null,
+            "user_id": 3454828571,
+            "processed_at": "2017-12-14T05:34:33-05:00",
+            "refund_line_items": [
+                {
+                    "id": 12538839067,
+                    "quantity": 5,
+                    "line_item_id": 484494606363,
+                    "subtotal": 440,
+                    "total_tax": 39.05,
+                    "line_item": {
+                        "id": 484494606363,
+                        "variant_id": 5212117925915,
+                        "title": "Shopify test2",
+                        "quantity": 5,
+                        "price": "88.00",
+                        "sku": "ktr-4",
+                        "variant_title": "26 / blue",
+                        "vendor": "sweet_shopify",
+                        "fulfillment_service": "manual",
+                        "product_id": 436098695195,
+                        "requires_shipping": true,
+                        "taxable": true,
+                        "gift_card": false,
+                        "name": "Shopify test2 - 26 / blue",
+                        "variant_inventory_management": null,
+                        "properties": [],
+                        "product_exists": true,
+                        "fulfillable_quantity": 0,
+                        "grams": 0,
+                        "total_discount": "0.00",
+                        "fulfillment_status": null,
+                        "tax_lines": [
+                            {
+                                "title": "NY State Tax",
+                                "price": "17.60",
+                                "rate": 0.04
+                            },
+                            {
+                                "title": "New York County Tax",
+                                "price": "21.45",
+                                "rate": 0.04875
+                            }
+                        ]
+                    }
+                },
+                {
+                    "id": 12538871835,
+                    "quantity": 3,
+                    "line_item_id": 484494639131,
+                    "subtotal": 30,
+                    "total_tax": 2.66,
+                    "line_item": {
+                        "id": 484494639131,
+                        "variant_id": 5034213474331,
+                        "title": "Test product from Shopify",
+                        "quantity": 3,
+                        "price": "10.00",
+                        "sku": "sku-tt",
+                        "variant_title": "26 / White",
+                        "vendor": "sweet_shopify",
+                        "fulfillment_service": "manual",
+                        "product_id": 303074639899,
+                        "requires_shipping": true,
+                        "taxable": true,
+                        "gift_card": false,
+                        "name": "Test product from Shopify - 26 / White",
+                        "variant_inventory_management": null,
+                        "properties": [],
+                        "product_exists": true,
+                        "fulfillable_quantity": 0,
+                        "grams": 0,
+                        "total_discount": "0.00",
+                        "fulfillment_status": null,
+                        "tax_lines": [
+                            {
+                                "title": "NY State Tax",
+                                "price": "1.20",
+                                "rate": 0.04
+                            },
+                            {
+                                "title": "New York County Tax",
+                                "price": "1.46",
+                                "rate": 0.04875
+                            }
+                        ]
+                    }
+                }
+            ],
+            "transactions": [
+                {
+                    "id": 293197381659,
+                    "order_id": 246889021467,
+                    "amount": "511.71",
+                    "kind": "refund",
+                    "gateway": "manual",
+                    "status": "success",
+                    "message": "Refunded 511.71 from manual gateway",
+                    "created_at": "2017-12-14T05:34:33-05:00",
+                    "test": false,
+                    "authorization": null,
+                    "currency": "USD",
+                    "location_id": null,
+                    "user_id": null,
+                    "parent_id": 289414578203,
+                    "device_id": null,
+                    "receipt": {},
+                    "error_code": null,
+                    "source_name": "web"
+                }
+            ],
+            "order_adjustments": []
+        }
+    ],
+    "customer": {
+        "id": 286682578971,
+        "email": "test@customer.com",
+        "accepts_marketing": false,
+        "created_at": "2017-12-05T11:23:10-05:00",
+        "updated_at": "2017-12-14T05:34:33-05:00",
+        "first_name": "New",
+        "last_name": "Customer",
+        "orders_count": 7,
+        "state": "disabled",
+        "total_spent": "2571.63",
+        "last_order_id": 247037755419,
+        "note": "",
+        "verified_email": true,
+        "multipass_identifier": null,
+        "tax_exempt": false,
+        "phone": null,
+        "tags": "",
+        "last_order_name": "#1046",
+        "default_address": {
+            "id": 308569702427,
+            "customer_id": 286682578971,
+            "first_name": "New",
+            "last_name": "Customer",
+            "company": "",
+            "address1": "NY 1001",
+            "address2": "22-3",
+            "city": "New York",
+            "province": "New York",
+            "country": "United States",
+            "zip": "10016",
+            "phone": "",
+            "name": "New Customer",
+            "province_code": "NY",
+            "country_code": "US",
+            "country_name": "United States",
+            "default": true
+        }
+    }
+}
