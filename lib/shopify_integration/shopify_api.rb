@@ -13,6 +13,10 @@ module ShopifyIntegration
       @config = config
     end
 
+    def cancel_order
+      api_post "orders/#{@config.dig('sync_id')}/cancel.json", {}
+    end
+
     def get_products
       inventories = Array.new
       products = get_objs('products', Product)
@@ -226,7 +230,6 @@ module ShopifyIntegration
     def shipments order_id
       get_objs "orders/#{order_id}/fulfillments", Shipment
     end
-
 
     private
 

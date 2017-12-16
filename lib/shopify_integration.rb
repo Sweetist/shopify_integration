@@ -26,6 +26,21 @@ module ShopifyIntegration
   class Server < EndpointBase::Sinatra::Base
     SYNC_TYPE = 'shopify'.freeze
 
+    post '/cancel_order' do
+      begin
+        api = ShopifyAPI.new(@payload, @config)
+        response = api.cancel_order
+
+        add_logs_object(message: "Order #{response['order']['name']} cancelled")
+        add_integration_params
+        result 200, 'Order cancelled'
+      rescue PushApiError => e
+        logger.error e.backtrace.join("\n")
+        binding.pry
+        result 500, response_for_error(e)
+      end
+    end
+
     # /add_shipment or /update_shipment
     post '/*\_shipment' do |_action|
       summary = Shopify::Shipment.new(@payload['order']['shipments'].first, @config).ship!
@@ -48,7 +63,6 @@ module ShopifyIntegration
       shopify_action "#{action}_#{obj_name}", obj_name.singularize
     end
 
-
     private
 
     def callback_handle(obj_name)
@@ -69,7 +83,7 @@ module ShopifyIntegration
       add_integration_params
       push(@objects.merge('parameters' => @parameters).to_json)
 
-      result 200, 'Callback from shipping easy'
+      result 200, 'Callback from Shopify'
     rescue PushApiError => e
       logger.error e.cause
       logger.error e.backtrace.join("\n")
@@ -134,7 +148,7 @@ module ShopifyIntegration
       rescue => e
         print e.cause
         print e.backtrace.join("\n")
-        result 500, (e.try(:response) ? e.response : response_for_error(error))
+        result 500, (e.try(:response) ? e.response : response_for_error(e))
       end
     end
 
@@ -180,6 +194,13 @@ module ShopifyIntegration
       )
 
       validate(res)
+    end
+
+    def add_logs_object(message:, type: 'orders', level: 'done', id: 'none')
+      add_object :log, id: id,
+                       level: level,
+                       message: message,
+                       type: type
     end
 
     def add_integration_params
