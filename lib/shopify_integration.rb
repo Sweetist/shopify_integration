@@ -36,7 +36,6 @@ module ShopifyIntegration
         result 200, 'Order cancelled'
       rescue PushApiError => e
         logger.error e.backtrace.join("\n")
-        binding.pry
         result 500, response_for_error(e)
       end
     end
@@ -145,10 +144,10 @@ module ShopifyIntegration
         else
           return result 200, response['message']
         end
-      rescue => e
+      rescue PushApiError => e
         print e.cause
         print e.backtrace.join("\n")
-        result 500, (e.try(:response) ? e.response : response_for_error(e))
+        result 500, response_for_error(e)
       end
     end
 
