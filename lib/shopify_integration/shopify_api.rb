@@ -110,7 +110,6 @@ module ShopifyIntegration
     def update_product
       product = Product.new
       product.add_wombat_obj @payload['product'], self
-
       ## Using shopify_obj_no_variants is a workaround until
       ## specifying variants' Shopify IDs is added
       master_result = api_put(

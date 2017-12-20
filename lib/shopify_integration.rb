@@ -163,7 +163,10 @@ module ShopifyIntegration
     end
 
     def update_without_shopify_id?(action_type, obj_name)
-      action_type == 'update' && @payload[obj_name]['shopify_id'].nil? && obj_name != "shipment"
+      action_type == 'update'                            \
+        && @payload[obj_name]['shopify_id'].nil?         \
+        && @config['sync_id'].nil?                       \
+        && obj_name != 'shipment'
     end
 
     def skip_summary?(response, action_type)
