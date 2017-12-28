@@ -101,7 +101,6 @@ module ShopifyIntegration
       result = api_post 'products.json', product.shopify_obj
 
       {
-        'objects' => result,
         'message' => "Product added with Shopify ID of " +
                      "#{result['product']['id']} was added."
       }
@@ -112,6 +111,7 @@ module ShopifyIntegration
       product.add_wombat_obj @payload['product'], self
       ## Using shopify_obj_no_variants is a workaround until
       ## specifying variants' Shopify IDs is added
+
       master_result = api_put(
         "products/#{product.shopify_id}.json",
         product.shopify_obj_no_variants
@@ -131,9 +131,7 @@ module ShopifyIntegration
           end
         end
       end
-
       {
-        'objects' => master_result,
         'message' => "Product with Shopify ID of " +
                      "#{master_result['product']['id']} was updated."
       }
@@ -167,7 +165,6 @@ module ShopifyIntegration
       end
 
       {
-        'objects' => result,
         'message' => "Customer with Shopify ID of " +
                      "#{result['customer']['id']} was updated."
       }
@@ -188,7 +185,6 @@ module ShopifyIntegration
                   "to #{inventory.quantity}."
       end
       {
-        'objects' => result,
         'message' => message
       }
     end

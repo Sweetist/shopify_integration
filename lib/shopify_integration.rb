@@ -17,7 +17,6 @@ require 'shopify_integration/image'
 require 'shopify_integration/customer'
 require 'shopify_integration/address'
 
-
 require 'sinatra'
 require 'endpoint_base'
 require 'httparty'

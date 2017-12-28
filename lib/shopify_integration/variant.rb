@@ -65,8 +65,7 @@ module ShopifyIntegration
       {
         'variant' => {
           'price' => @price,
-          'sku' => @sku,
-          'inventory_management' => 'shopify'
+          'sku' => @sku
         }.merge(@options)
       }
     end
