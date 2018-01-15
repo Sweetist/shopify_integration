@@ -41,9 +41,17 @@ module ShopifyIntegration
 
     # /add_shipment or /update_shipment
     post '/*\_shipment' do |_action|
-      summary = Shopify::Shipment.new(@payload['order']['shipments'].first, @config).ship!
+      begin
+        summary = Shopify::Shipment.new(@payload['order']['shipments'].first, @config).ship!
 
-      result 200, summary
+        add_logs_object(message: summary)
+        add_integration_params
+        result 200, summary
+      rescue PushApiError => e
+        logger.error e.cause
+        logger.error e.backtrace.join("\n")
+        result 500, response_for_error(e)
+      end
     end
 
     ## Supported callbacks:
@@ -85,8 +93,7 @@ module ShopifyIntegration
     rescue PushApiError => e
       logger.error e.cause
       logger.error e.backtrace.join("\n")
-      # p e.backtrace.join("\n")
-      result 500, e.message
+      result 500, response_for_error(e)
     end
 
     def shopify_action(action, obj_name)

@@ -29,8 +29,8 @@ module ShopifyIntegration
 
       def shopify_order_id
         @shopify_order_id ||= @shipment['shopify_order_id']         \
-          || find_order_id_by_order_number(@shipment['order_id'])   \
-          || @config.dig('sync_id')
+          || @config.dig('sync_id')                                 \
+          || find_order_id_by_order_number(@shipment['order_id'])
       end
 
       def find_order_id_by_order_number(order_number)
