@@ -135,7 +135,6 @@ module ShopifyIntegration
                                 response['objects'][obj_name]['id'].to_s,
                                 @payload[obj_name]['id']
         end
-        add_integration_params
 
         if response.has_key?('additional_objs') &&
            response.has_key?('additional_objs_name')
@@ -145,6 +144,9 @@ module ShopifyIntegration
         end
 
         # avoids "Successfully retrieved 0 customers from Shopify."
+        add_logs_object(message: response['message']) if sync_action
+        add_integration_params
+
         if skip_summary?(response, action_type)
           return result 200
         else
