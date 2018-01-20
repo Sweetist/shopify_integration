@@ -98,11 +98,13 @@ module ShopifyIntegration
     def add_product
       product = Product.new
       product.add_wombat_obj @payload['product'], self
+
       result = api_post 'products.json', product.shopify_obj
 
       {
         'message' => "Product added with Shopify ID of " +
-                     "#{result['product']['id']} was added."
+                     "#{result['product']['id']} was added.",
+        'objects' => result
       }
     end
 

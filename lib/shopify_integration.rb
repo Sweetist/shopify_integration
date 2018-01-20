@@ -33,7 +33,7 @@ module ShopifyIntegration
         add_logs_object(message: "Order #{response['order']['name']} cancelled")
         add_integration_params
         result 200, 'Order cancelled'
-      rescue PushApiError => e
+      rescue => e
         logger.error e.backtrace.join("\n")
         result 500, response_for_error(e)
       end
@@ -47,7 +47,7 @@ module ShopifyIntegration
         add_logs_object(message: summary)
         add_integration_params
         result 200, summary
-      rescue PushApiError => e
+      rescue => e
         logger.error e.cause
         logger.error e.backtrace.join("\n")
         result 500, response_for_error(e)
@@ -90,7 +90,7 @@ module ShopifyIntegration
       push(@objects.merge('parameters' => @parameters).to_json)
 
       result 200, 'Callback from Shopify'
-    rescue PushApiError => e
+    rescue => e
       logger.error e.cause
       logger.error e.backtrace.join("\n")
       result 500, response_for_error(e)
@@ -115,25 +115,26 @@ module ShopifyIntegration
           response['objects'].each do |obj|
             ## Check if object has a metafield with a Wombat ID in it,
             ## if so change object ID to that prior to adding to Wombat
-            wombat_id = shopify.wombat_id_metafield obj_name, obj['shopify_id']
+            # wombat_id = shopify.wombat_id_metafield obj_name, obj['shopify_id']
 
-            obj['id'] = wombat_id if wombat_id
+            # obj['id'] = wombat_id if wombat_id
 
             ## Add object to Wombat
             add_object obj_name, obj
           end
 
         when 'add'
+
           ## This will do a partial update in Wombat, only the new key
           ## shopify_id will be added, everything else will be the same
-          add_object obj_name,
-                     { 'id' => @payload[obj_name]['id'],
-                       'shopify_id' => response['objects'][obj_name]['id'].to_s }
+          # add_object obj_name,
+          #            { 'id' => @payload[obj_name]['id'],
+          #              'shopify_id' => response['objects'][obj_name]['id'].to_s }
 
           ## Add metafield to track Wombat ID
-          shopify.add_metafield obj_name,
-                                response['objects'][obj_name]['id'].to_s,
-                                @payload[obj_name]['id']
+          # shopify.add_metafield obj_name,
+          #                       response['objects'][obj_name]['id'].to_s,
+          #                       @payload[obj_name]['id']
         end
 
         if response.has_key?('additional_objs') &&
@@ -152,7 +153,7 @@ module ShopifyIntegration
         else
           return result 200, response['message']
         end
-      rescue PushApiError => e
+      rescue => e
         print e.cause
         print e.backtrace.join("\n")
         result 500, response_for_error(e)

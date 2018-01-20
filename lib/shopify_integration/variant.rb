@@ -2,7 +2,7 @@ module ShopifyIntegration
   class Variant
     attr_reader :shopify_id, :shopify_parent_id, :quantity, :images,
                 :sku, :price, :options, :shipping_category, :name,
-                :inventory_management
+                :inventory_management, :option_types
 
     def add_shopify_obj shopify_variant, shopify_options
       @shopify_id = shopify_variant['id']
@@ -41,15 +41,18 @@ module ShopifyIntegration
       @price = wombat_variant['price'].to_f
       @sku = wombat_variant['sku']
       @quantity = wombat_variant['quantity'].to_i
-      @options = Hash.new
+      @inventory_management = wombat_variant['inventory_management']
+      @option_types = wombat_variant['option_types'][0..2]
+      @options = {}
 
       unless wombat_variant['options'].nil?
-        wombat_variant['options'].values.each_with_index do |value, index|
-          @options['option' + (index + 1).to_s] = value
+        wombat_variant['option_types'].each_with_index do |value, index|
+          val = wombat_variant['options'][value] || 'none'
+          @options['option' + (index + 1).to_s] = val
         end
       end
 
-      @images = Array.new
+      @images = []
       unless wombat_variant['images'].nil?
         wombat_variant['images'].each do |wombat_image|
           image = Image.new
@@ -61,12 +64,19 @@ module ShopifyIntegration
       self
     end
 
+    def inventory_hash
+      return {} unless inventory_management
+      { 'inventory_management' => 'shopify',
+        'inventory_quantity' => quantity }
+    end
+
     def shopify_obj
       {
         'variant' => {
           'price' => @price,
           'sku' => @sku
         }.merge(@options)
+          .merge(inventory_hash)
       }
     end
 
