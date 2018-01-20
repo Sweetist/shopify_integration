@@ -42,11 +42,12 @@ module ShopifyIntegration
       @sku = wombat_variant['sku']
       @quantity = wombat_variant['quantity'].to_i
       @inventory_management = wombat_variant['inventory_management']
-      @option_types = wombat_variant['option_types'][0..2]
+      option_types_all = wombat_variant['option_types']
+      @option_types = option_types_all[0..2] if option_types_all
       @options = {}
 
       unless wombat_variant['options'].nil?
-        wombat_variant['option_types'].each_with_index do |value, index|
+        @option_types.each_with_index do |value, index|
           val = wombat_variant['options'][value] || 'none'
           @options['option' + (index + 1).to_s] = val
         end
