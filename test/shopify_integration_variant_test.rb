@@ -9,7 +9,7 @@ describe ShopifyIntegration::Variant do
       variant = ShopifyIntegration::Variant.new
       variant.add_wombat_obj payload['product']['variants'].first
       variant.shopify_obj['variant']['inventory_management'].wont_be_nil
-      variant.shopify_obj['variant']['quantity'].wont_be_nil
+      variant.shopify_obj['variant']['inventory_quantity'].wont_be_nil
     end
     it 'return without inventory if not inventory' do
       payload =
@@ -19,7 +19,7 @@ describe ShopifyIntegration::Variant do
       variant = ShopifyIntegration::Variant.new
       variant.add_wombat_obj payload
       variant.shopify_obj['variant']['inventory_management'].must_be_nil
-      variant.shopify_obj['variant']['quantity'].must_be_nil
+      variant.shopify_obj['variant']['inventory_quantity'].must_be_nil
     end
 
     it 'should be with options' do
@@ -28,7 +28,6 @@ describe ShopifyIntegration::Variant do
         .first
       variant = ShopifyIntegration::Variant.new
       variant.add_wombat_obj payload
-      option1 = variant.option_types.first
       option2 = variant.option_types.second
       variant.options['option1'].must_equal 'none'
       variant.options['option2'].must_equal payload['options'][option2]

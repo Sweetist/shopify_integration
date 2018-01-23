@@ -20,8 +20,10 @@ module ShopifyIntegration
       shopify_order['shipping_lines'].each do |shipping_line|
         @totals_shipping += shipping_line['price'].to_f
       end
-      @payments = Array.new
+      @payments = []
       @totals_payment = 0.00
+      @totals_refund = refund_totals_calculate(shopify_order['refunds'])
+
       # shopify_api.transactions(@shopify_id).each do |transaction|
       #   if (transaction.kind == 'capture' or transaction.kind == 'sale') and
       #       transaction.status == 'success'
@@ -31,7 +33,7 @@ module ShopifyIntegration
       #   end
       # end
       @totals_order = shopify_order['total_price'].to_f
-      @line_items = Array.new
+      @line_items = []
       shopify_order['line_items'].each do |shopify_li|
         line_item = LineItem.new
         @line_items << line_item.add_shopify_obj(shopify_li, shopify_api)
@@ -74,6 +76,15 @@ module ShopifyIntegration
       'completed'
     end
 
+    def refund_totals_calculate(payload)
+      return 0.00 unless payload.any?
+      amount = 0.00
+      payload.each do |refund|
+        refund['transactions'].each { |tr| amount += tr['amount'].to_f }
+      end
+      amount
+    end
+
     def wombat_obj
       {
         'id' => @store_name.upcase + '-' + @order_number.to_s,
@@ -104,6 +115,10 @@ module ShopifyIntegration
           {
             'name' => 'Discounts',
             'value' => @totals_discounts
+          },
+          {
+            'name' => 'Refund',
+            'value' => @totals_refund
           }
         ],
         'shipping_address' => @shipping_address,
