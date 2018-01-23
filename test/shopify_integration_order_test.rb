@@ -16,9 +16,9 @@ describe ShopifyIntegration::Order do
 
       wombat_obj.wont_be_nil
       wombat_obj['adjustments']
-        .select { |adj| adj['name'] == 'Refund' }
+        .select { |adj| adj['name'] == 'Refunded' }
         .first['value']
-        .must_equal refund
+        .must_equal refund * -1
     end
   end
 end

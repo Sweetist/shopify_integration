@@ -82,7 +82,7 @@ module ShopifyIntegration
       payload.each do |refund|
         refund['transactions'].each { |tr| amount += tr['amount'].to_f }
       end
-      amount
+      amount * -1
     end
 
     def wombat_obj
@@ -117,7 +117,7 @@ module ShopifyIntegration
             'value' => @totals_discounts
           },
           {
-            'name' => 'Refund',
+            'name' => 'Refunded',
             'value' => @totals_refund
           }
         ],
