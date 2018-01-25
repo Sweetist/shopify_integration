@@ -95,7 +95,6 @@ module ShopifyIntegration
         'email' => @email,
         'currency' => @currency,
         'placed_on' => @placed_on,
-        'shipment_cost' => @totals_shipping,
         'totals' => {
           'item' => @totals_item,
           'tax' => @totals_tax,
