@@ -23,22 +23,14 @@ module ShopifyIntegration
       @payments = []
       @totals_payment = 0.00
       @totals_refund = refund_totals_calculate(shopify_order['refunds'])
+      @tax_lines = shopify_order['tax_lines']
 
-      # shopify_api.transactions(@shopify_id).each do |transaction|
-      #   if (transaction.kind == 'capture' or transaction.kind == 'sale') and
-      #       transaction.status == 'success'
-      #     @totals_payment += transaction.amount.to_f
-      #     payment = Payment.new
-      #     @payments << payment.add_shopify_obj(transaction, shopify_api)
-      #   end
-      # end
       @totals_order = shopify_order['total_price'].to_f
       @line_items = []
       shopify_order['line_items'].each do |shopify_li|
         line_item = LineItem.new
         @line_items << line_item.add_shopify_obj(shopify_li, shopify_api)
       end
-
 
       unless shopify_order['shipping_address'].nil?
         @shipping_address = {
@@ -95,6 +87,7 @@ module ShopifyIntegration
         'email' => @email,
         'currency' => @currency,
         'placed_on' => @placed_on,
+        'tax_lines' => @tax_lines,
         'totals' => {
           'item' => @totals_item,
           'tax' => @totals_tax,
