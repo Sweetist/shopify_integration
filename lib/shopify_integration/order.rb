@@ -98,10 +98,6 @@ module ShopifyIntegration
         'line_items' => Util.wombat_array(@line_items),
         'adjustments' => [
           {
-            'name' => 'Tax',
-            'value' => @totals_tax
-          },
-          {
             'name' => 'Discounts',
             'value' => @totals_discounts
           },
