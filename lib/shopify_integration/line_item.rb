@@ -10,7 +10,7 @@ module ShopifyIntegration
       @name = shopify_li['name']
       @quantity = shopify_li['quantity'].to_i
       @price = shopify_li['price'].to_f
-
+      @tax_lines = shopify_li['tax_lines']
       self
     end
 
@@ -22,7 +22,8 @@ module ShopifyIntegration
           'shopify_parent_id' => @shopify_parent_id.to_s,
           'name' => @name,
           'quantity' => @quantity,
-          'price' => @price
+          'price' => @price,
+          'tax_lines' => @tax_lines
         }
       ]
     end

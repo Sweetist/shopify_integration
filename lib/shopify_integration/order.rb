@@ -24,7 +24,7 @@ module ShopifyIntegration
       @totals_payment = 0.00
       @totals_refund = refund_totals_calculate(shopify_order['refunds'])
       @tax_lines = shopify_order['tax_lines']
-
+      @shipping_lines = shopify_order['shipping_lines']
       @totals_order = shopify_order['total_price'].to_f
       @line_items = []
       shopify_order['line_items'].each do |shopify_li|
@@ -106,6 +106,7 @@ module ShopifyIntegration
             'value' => @totals_refund
           }
         ],
+        'shipping_lines' => @shipping_lines,
         'shipping_address' => @shipping_address,
         'billing_address' => @billing_address,
         'payments' => Util.wombat_array(@payments)

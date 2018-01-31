@@ -32,5 +32,18 @@ describe ShopifyIntegration::Order do
       wombat_obj.wont_be_nil
       wombat_obj['tax_lines'].count.must_equal 2
     end
+
+    it 'return with tax_lines for shipping and line items' do
+      config = { 'shopify_host' => 'shopify.com',
+                 'status' => 200 }
+      payload = parse_fixture('shopify_order_with_shipment.json')
+      api = ShopifyIntegration::ShopifyAPI.new(payload, config)
+      order = ShopifyIntegration::Order.new
+      order.add_shopify_obj payload, api
+      wombat_obj = order.wombat_obj
+      wombat_obj.wont_be_nil
+      wombat_obj['line_items'].first['tax_lines'].count.must_equal 2
+      wombat_obj['shipping_lines'].first['tax_lines'].count.must_equal 2
+    end
   end
 end
