@@ -7,6 +7,7 @@ module ShopifyIntegration
       @firstname = shopify_customer['first_name']
       @lastname = shopify_customer['last_name']
       @email = shopify_customer['email']
+      @tax_exempt = shopify_customer['tax_exempt']
       @default_address = Address
                          .new
                          .add_shopify_obj(shopify_customer['default_address'])
@@ -33,6 +34,7 @@ module ShopifyIntegration
         'source' => @source,
         'firstname' => @firstname,
         'lastname' => @lastname,
+        'tax_exempt' => @tax_exempt,
         'email' => @email,
         'shipping_address' => @default_address.wombat_obj,
         'billing_address' => @default_address.wombat_obj
