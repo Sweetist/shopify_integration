@@ -21,6 +21,18 @@ describe ShopifyIntegration::Order do
         .must_equal refund * -1
     end
 
+    it 'return fulfilled status' do
+      config = { 'shopify_host' => 'shopify.com',
+                 'status' => 200 }
+      payload = parse_fixture('shopify_order_fulfilled.json')
+      api = ShopifyIntegration::ShopifyAPI.new(payload, config)
+      order = ShopifyIntegration::Order.new
+      order.add_shopify_obj payload, api
+      wombat_obj = order.wombat_obj
+      wombat_obj.wont_be_nil
+      wombat_obj['status'].must_equal 'fulfilled'
+    end
+
     it 'return with tax_lines' do
       config = { 'shopify_host' => 'shopify.com',
                  'status' => 200 }

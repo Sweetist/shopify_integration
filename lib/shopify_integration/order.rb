@@ -9,6 +9,7 @@ module ShopifyIntegration
       @shopify_id = shopify_order['id']
       @source = Util.shopify_host shopify_api.config
       @canceled_date = shopify_order['cancelled_at']
+      @fulfillment_status = shopify_order['fulfillment_status']
       @status = order_status
       @email = shopify_order['email']
       @currency = shopify_order['currency']
@@ -64,6 +65,7 @@ module ShopifyIntegration
     end
 
     def order_status
+      return 'fulfilled' if @fulfillment_status == 'fulfilled'
       return 'cancelled' if @canceled_date
       'completed'
     end
