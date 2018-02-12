@@ -9,6 +9,8 @@ module ShopifyIntegration
       @shopify_parent_id = shopify_variant['product_id']
       @name = shopify_variant['title']
       @sku = shopify_variant['sku']
+      @weight = shopify_variant['weight']
+      @weight_unit = shopify_variant['weight_unit']
       @inventory_management = shopify_variant['inventory_management']
       @price = shopify_variant['price'].to_f
       @shipping_category = shopify_variant['requires_shipping'] ?
@@ -88,6 +90,8 @@ module ShopifyIntegration
         'shopify_parent_id' => @shopify_parent_id.to_s,
         'shipping_category' => @shipping_category,
         'price' => @price,
+        'weight' => @weight,
+        'weight_units' => @weight_unit,
         'quantity' => @quantity,
         'options' => @options,
         'inventory_management' => @inventory_management
