@@ -43,6 +43,8 @@ module ShopifyIntegration
       @price = wombat_variant['price'].to_f
       @sku = wombat_variant['sku']
       @quantity = wombat_variant['quantity'].to_i
+      @weight = wombat_variant['weight']
+      @weight_unit = wombat_variant['weight_unit']
       @inventory_management = wombat_variant['inventory_management']
       option_types_all = wombat_variant['option_types']
       @option_types = option_types_all[0..2] if option_types_all
@@ -77,7 +79,9 @@ module ShopifyIntegration
       {
         'variant' => {
           'price' => @price,
-          'sku' => @sku
+          'sku' => @sku,
+          'weight' => @weight,
+          'weight_units' => @weight_unit,
         }.merge(@options)
           .merge(inventory_hash)
       }
