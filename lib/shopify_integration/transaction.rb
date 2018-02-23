@@ -22,6 +22,5 @@ module ShopifyIntegration
 
       self
     end
-
   end
 end
