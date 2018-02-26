@@ -14,10 +14,9 @@ describe ShopifyIntegration::Order do
 
   describe '#wombat_obj' do
     it 'return with refund adjustments' do
-      payload = parse_fixture('shopify_order_with_refund.json')
+      payload = parse_fixture('shopify_order_with_refund_but_wo_transactions.json')
       wombat_obj = create_order_from(payload)
-
-      refund = payload['refunds'].first['transactions'].first['amount'].to_f
+      refund = 21.78
 
       wombat_obj.wont_be_nil
       wombat_obj['adjustments']

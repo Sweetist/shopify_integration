@@ -74,8 +74,9 @@ module ShopifyIntegration
     def refund_totals_calculate(payload)
       return 0.00 unless payload.any?
       amount = 0.00
-      payload.each do |refund|
-        refund['transactions'].each { |tr| amount += tr['amount'].to_f }
+      payload.first['refund_line_items'].map do |line|
+        amount += line['subtotal']
+        amount += line['total_tax']
       end
       amount * -1
     end
