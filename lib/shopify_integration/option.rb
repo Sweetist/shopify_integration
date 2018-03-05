@@ -15,7 +15,7 @@ module ShopifyIntegration
 
     def shopify_obj
       {
-        'name' => @name,
+        'name' => @name
       }
     end
   end
