@@ -10,7 +10,6 @@ module ShopifyIntegration
             params += "#{key}=#{value}"
           end
         end
-
         response = RestClient.get shopify_url + (final_resource resource) + params
         JSON.parse response.force_encoding("utf-8")
       end
@@ -34,7 +33,7 @@ module ShopifyIntegration
 
       def final_resource resource
         if !@config['since'].nil?
-          resource += ".json?updated_at_min=#{@config['since']}"
+          resource += ".json?status=any&updated_at_min=#{@config['since']}"
         elsif !@config['id'].nil?
           resource += "/#{@config['id']}.json"
         else
