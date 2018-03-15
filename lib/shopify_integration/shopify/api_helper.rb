@@ -36,6 +36,8 @@ module ShopifyIntegration
           resource += ".json?status=any&updated_at_min=#{@config['since']}"
         elsif !@config['id'].nil?
           resource += "/#{@config['id']}.json"
+        elsif !@config['email'].nil?
+          resource += "/search.json?query=email:#{@config['email']}"
         else
           resource += '.json'
         end
