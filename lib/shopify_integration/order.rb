@@ -27,6 +27,7 @@ module ShopifyIntegration
       @tax_lines = shopify_order['tax_lines']
       @shipping_lines = shopify_order['shipping_lines']
       @fulfillments = shopify_order['fulfillments']
+      @refunds = shopify_order['refunds']
       @totals_order = shopify_order['total_price'].to_f
       @line_items = []
       shopify_order['line_items'].each do |shopify_li|
@@ -111,6 +112,7 @@ module ShopifyIntegration
           }
         ],
         'fulfillments' => @fulfillments,
+        'refunds' => @refunds,
         'shipping_lines' => @shipping_lines,
         'shipping_address' => @shipping_address,
         'billing_address' => @billing_address,

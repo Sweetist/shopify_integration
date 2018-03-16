@@ -53,5 +53,17 @@ describe ShopifyIntegration::Order do
       wombat_obj.wont_be_nil
       wombat_obj['fulfillments'].wont_be_nil
     end
+
+    it 'create refunds on canceled order' do
+      payload = parse_fixture('shopify_order_with_refund.json')
+      wombat_obj = create_order_from(payload)
+      wombat_obj.wont_be_nil
+      wombat_obj['refunds'].wont_be_nil
+      wombat_obj['refunds'].first['refund_line_items'].wont_be_nil
+      wombat_obj['refunds'].first['refund_line_items']
+                           .first['line_item']['sku'].wont_be_nil
+      wombat_obj['refunds'].first['refund_line_items']
+                           .first['quantity'].wont_be_nil
+    end
   end
 end
