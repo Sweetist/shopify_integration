@@ -1,0 +1,22 @@
+{
+  "transactions": [{
+    "id": 461481115675,
+    "order_id": 427448762395,
+    "amount": "54.44",
+    "kind": "sale",
+    "gateway": "manual",
+    "status": "success",
+    "message": "Marked the manual payment as received",
+    "created_at": "2018-03-21T03:45:44-04:00",
+    "test": false,
+    "authorization": null,
+    "currency": "USD",
+    "location_id": null,
+    "user_id": null,
+    "parent_id": null,
+    "device_id": null,
+    "receipt": {},
+    "error_code": null,
+    "source_name": "shopify_draft_order"
+  }]
+}

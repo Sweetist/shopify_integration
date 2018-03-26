@@ -84,6 +84,24 @@ class ShopifyIntegrationTest < Minitest::Test
     refute_empty order_body['shopify_id']
   end
 
+  def test_respond_for_get_payments
+    payload = load_fixture('get_transactions_request_from_sweet.json')
+    response = load_fixture('shopify_transactions.json')
+
+    RestClient.stub :get, response do
+      post '/get_payments', payload
+    end
+
+    assert last_response.ok?
+    payments = JSON.parse(last_response.body)['payments'].first
+    params_body = JSON.parse(last_response.body)['parameters']
+    assert_equal params_body['sync_type'], 'shopify'
+    refute_nil payments['amount']
+    refute_empty payments['status']
+    refute_empty payments['payment_method']
+    refute_nil payments['id']
+  end
+
   def test_respond_right_cancel_status
     payload = load_fixture('cancel_order_shopify_payload.json')
     mock = Minitest::Mock.new

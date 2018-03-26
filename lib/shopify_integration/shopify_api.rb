@@ -69,6 +69,15 @@ module ShopifyIntegration
       get_webhook_results 'shipments', shipments, false
     end
 
+    def get_payments
+      payments = []
+      transactions(config['order_id']).each do |transaction|
+        payment = Payment.new
+        payments << payment.add_shopify_obj(transaction)
+      end
+      get_webhook_results 'payments', payments, false
+    end
+
     def get_orders
       get_webhook_results 'orders', Order
       orders = Util.wombat_array(get_objs('orders', Order))
