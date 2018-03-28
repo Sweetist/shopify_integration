@@ -5,13 +5,14 @@ module ShopifyIntegration
       @status = shopify_transaction.status
       @amount = shopify_transaction.amount
       @payment_method = shopify_transaction.gateway
-
+      @kind = shopify_transaction.kind
       self
     end
 
     def wombat_obj
       {
         'id' => @id,
+        'kind' => @kind,
         'status' => @status,
         'amount' => @amount.to_f,
         'payment_method' => @payment_method
