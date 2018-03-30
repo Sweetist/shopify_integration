@@ -23,11 +23,9 @@ module ShopifyIntegration
       end
       @payments = []
       @totals_payment = 0.00
-      @totals_refund = refund_totals_calculate(shopify_order['refunds'])
       @tax_lines = shopify_order['tax_lines']
       @shipping_lines = shopify_order['shipping_lines']
       @fulfillments = shopify_order['fulfillments']
-      @refunds = shopify_order['refunds']
       @totals_order = shopify_order['total_price'].to_f
       @line_items = []
       shopify_order['line_items'].each do |shopify_li|
@@ -72,16 +70,6 @@ module ShopifyIntegration
       'completed'
     end
 
-    def refund_totals_calculate(payload)
-      return 0.00 unless payload.any?
-      amount = 0.00
-      payload.first['refund_line_items'].map do |line|
-        amount += line['subtotal']
-        amount += line['total_tax']
-      end
-      amount * -1
-    end
-
     def wombat_obj
       {
         'id' => @store_name.upcase + '-' + @order_number.to_s,
@@ -105,14 +93,9 @@ module ShopifyIntegration
           {
             'name' => 'Discounts',
             'value' => @totals_discounts
-          },
-          {
-            'name' => 'Refunded',
-            'value' => @totals_refund
           }
         ],
         'fulfillments' => @fulfillments,
-        'refunds' => @refunds,
         'shipping_lines' => @shipping_lines,
         'shipping_address' => @shipping_address,
         'billing_address' => @billing_address,

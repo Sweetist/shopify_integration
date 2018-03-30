@@ -1,7 +1,7 @@
 require 'test_helper'
 
 describe ShopifyIntegration::Order do
-  # make_my_diffs_pretty!
+  make_my_diffs_pretty!
 
   def create_order_from(payload)
     config = { 'shopify_host' => 'shopify.com',
@@ -13,18 +13,6 @@ describe ShopifyIntegration::Order do
   end
 
   describe '#wombat_obj' do
-    it 'return with refund adjustments' do
-      payload = parse_fixture('shopify_order_with_refund_but_wo_transactions.json')
-      wombat_obj = create_order_from(payload)
-      refund = 21.78
-
-      wombat_obj.wont_be_nil
-      wombat_obj['adjustments']
-        .select { |adj| adj['name'] == 'Refunded' }
-        .first['value']
-        .must_equal refund * -1
-    end
-
     it 'return fulfilled status' do
       payload = parse_fixture('shopify_order_fulfilled.json')
       wombat_obj = create_order_from(payload)
@@ -52,18 +40,6 @@ describe ShopifyIntegration::Order do
       wombat_obj = create_order_from(payload)
       wombat_obj.wont_be_nil
       wombat_obj['fulfillments'].wont_be_nil
-    end
-
-    it 'create refunds on canceled order' do
-      payload = parse_fixture('shopify_order_with_refund.json')
-      wombat_obj = create_order_from(payload)
-      wombat_obj.wont_be_nil
-      wombat_obj['refunds'].wont_be_nil
-      wombat_obj['refunds'].first['refund_line_items'].wont_be_nil
-      wombat_obj['refunds'].first['refund_line_items']
-                           .first['line_item']['sku'].wont_be_nil
-      wombat_obj['refunds'].first['refund_line_items']
-                           .first['quantity'].wont_be_nil
     end
   end
 end

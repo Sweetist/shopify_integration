@@ -12,6 +12,6 @@
 
 	"request": {
 		"id": "shopify",
-		"query": "get_payments"
+		"query": "get_refunds"
 	}
 }

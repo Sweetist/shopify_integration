@@ -1,0 +1,124 @@
+{
+    "refunds": [
+        {
+            "id": 17276502043,
+            "order_id": 446859280411,
+            "created_at": "2018-03-29T07:34:34-04:00",
+            "note": "",
+            "user_id": 3454828571,
+            "processed_at": "2018-03-29T07:34:34-04:00",
+            "restock": true,
+            "refund_line_items": [
+                {
+                    "id": 22606315547,
+                    "quantity": 2,
+                    "line_item_id": 951416029211,
+                    "location_id": 2692481051,
+                    "subtotal": 20,
+                    "total_tax": 1.78,
+                    "line_item": {
+                        "id": 951416029211,
+                        "variant_id": 6058410803227,
+                        "title": "Taxable 30-18-39",
+                        "quantity": 5,
+                        "price": "10.00",
+                        "sku": "sku-30-18-39",
+                        "variant_title": "none",
+                        "vendor": "sweet_shopify",
+                        "fulfillment_service": "manual",
+                        "product_id": 580591255579,
+                        "requires_shipping": true,
+                        "taxable": true,
+                        "gift_card": false,
+                        "name": "Taxable 30-18-39 - none",
+                        "variant_inventory_management": null,
+                        "properties": [],
+                        "product_exists": true,
+                        "fulfillable_quantity": 3,
+                        "grams": 0,
+                        "total_discount": "0.00",
+                        "fulfillment_status": null,
+                        "tax_lines": [
+                            {
+                                "title": "NY State Tax",
+                                "price": "2.00",
+                                "rate": 0.04
+                            },
+                            {
+                                "title": "New York County Tax",
+                                "price": "2.44",
+                                "rate": 0.04875
+                            }
+                        ]
+                    }
+                },
+                {
+                    "id": 22606348315,
+                    "quantity": 2,
+                    "line_item_id": 951416061979,
+                    "location_id": 2692481051,
+                    "subtotal": 16,
+                    "total_tax": 1.42,
+                    "line_item": {
+                        "id": 951416061979,
+                        "variant_id": 6215753564187,
+                        "title": "A Feb 8 Inv test",
+                        "quantity": 5,
+                        "price": "8.00",
+                        "sku": "12345",
+                        "variant_title": "none",
+                        "vendor": "sweet_shopify",
+                        "fulfillment_service": "manual",
+                        "product_id": 613857493019,
+                        "requires_shipping": true,
+                        "taxable": true,
+                        "gift_card": false,
+                        "name": "A Feb 8 Inv test - none",
+                        "variant_inventory_management": "shopify",
+                        "properties": [],
+                        "product_exists": true,
+                        "fulfillable_quantity": 3,
+                        "grams": 3629,
+                        "total_discount": "0.00",
+                        "fulfillment_status": null,
+                        "tax_lines": [
+                            {
+                                "title": "NY State Tax",
+                                "price": "1.60",
+                                "rate": 0.04
+                            },
+                            {
+                                "title": "New York County Tax",
+                                "price": "1.95",
+                                "rate": 0.04875
+                            }
+                        ]
+                    }
+                }
+            ],
+            "transactions": [
+                {
+                    "id": 479999983643,
+                    "order_id": 446859280411,
+                    "amount": "39.20",
+                    "kind": "refund",
+                    "gateway": "manual",
+                    "status": "success",
+                    "message": "Refunded 39.20 from manual gateway",
+                    "created_at": "2018-03-29T07:34:34-04:00",
+                    "test": false,
+                    "authorization": null,
+                    "currency": "USD",
+                    "location_id": null,
+                    "user_id": null,
+                    "parent_id": 479999492123,
+                    "device_id": null,
+                    "receipt": {},
+                    "error_code": null,
+                    "source_name": "web"
+                }
+            ],
+            "order_adjustments": []
+        }
+    ]
+}

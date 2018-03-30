@@ -2,7 +2,7 @@ require 'test_helper'
 
 class ShopifyIntegrationTest < Minitest::Test
   include Rack::Test::Methods
-
+  make_my_diffs_pretty!
   def app
     ShopifyIntegration::Server
   end
@@ -100,6 +100,22 @@ class ShopifyIntegrationTest < Minitest::Test
     refute_empty payments['status']
     refute_empty payments['payment_method']
     refute_nil payments['id']
+  end
+
+  def test_respond_for_get_refunds
+    payload = load_fixture('get_refunds_request_from_sweet.json')
+    response = load_fixture('shopify_refunds.json')
+
+    RestClient.stub :get, response do
+      post '/get_refunds', payload
+    end
+
+    assert last_response.ok?
+    refunds = JSON.parse(last_response.body)['refunds'].first
+    params_body = JSON.parse(last_response.body)['parameters']
+    assert_equal params_body['sync_type'], 'shopify'
+    refute_nil refunds['restock']
+    refute_empty refunds['refund_line_items']
   end
 
   def test_respond_right_cancel_status

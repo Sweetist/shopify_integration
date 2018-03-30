@@ -69,6 +69,10 @@ module ShopifyIntegration
       get_webhook_results 'shipments', shipments, false
     end
 
+    def get_refunds
+      get_webhook_results 'refunds', refunds(config['order_id']), false
+    end
+
     def get_payments
       payments = []
       transactions(config['order_id']).each do |transaction|
@@ -225,16 +229,20 @@ module ShopifyIntegration
       wombat_id
     end
 
-    def order order_id
+    def order(order_id)
       get_objs "orders/#{order_id}", Order
     end
 
-    def transactions order_id
+    def transactions(order_id)
       get_objs "orders/#{order_id}/transactions", Transaction
     end
 
-    def shipments order_id
+    def shipments(order_id)
       get_objs "orders/#{order_id}/fulfillments", Shipment
+    end
+
+    def refunds(order_id)
+      get_objs "orders/#{order_id}/refunds", Refund
     end
 
     private
