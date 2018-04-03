@@ -133,6 +133,22 @@ class ShopifyIntegrationTest < Minitest::Test
     assert_equal response['orders'].first['status'], 'cancelled'
   end
 
+  # def test_respond_add_product
+  #   payload = load_fixture('add_product_payload.json')
+  #   response_products = load_fixture('get_products_from_shopify.json')
+  #   response_add = load_fixture('add_product_from_shopify.json')
+
+  #   RestClient.stub :get, response_products do
+  #     RestClient.stub :post, response_add do
+  #       post '/add_shipment', payload
+  #     end
+  #   end
+  #   assert last_response.ok?
+  #   params_body = JSON.parse(last_response.body)['parameters']
+  #   assert_equal params_body['sync_type'], 'shopify'
+  #   refute_nil params_body['sync_action']
+  # end
+
   def test_respond_add_shipment
     payload = load_fixture('add_shipment_order_shopify_payload.json')
     response = load_fixture('get_orders_response_from_shopify.json')

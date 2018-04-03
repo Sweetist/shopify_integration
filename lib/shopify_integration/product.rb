@@ -1,7 +1,7 @@
 module ShopifyIntegration
   class Product
-
-    attr_reader :shopify_id, :variants
+    attr_reader :shopify_id, :variants, :name, :sku
+    attr_writer :shopify_id
 
     def add_shopify_obj shopify_product, shopify_api
       @shopify_id = shopify_product['id']
@@ -44,6 +44,7 @@ module ShopifyIntegration
       @wombat_id = wombat_product['id'].to_s
       @name = wombat_product['name']
       @description = wombat_product['description']
+      @sku = wombat_product['sku']
 
       @options = Array.new
       unless wombat_product['options'].blank?

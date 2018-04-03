@@ -112,18 +112,26 @@ module ShopifyIntegration
       product = Product.new
       product.add_wombat_obj @payload['product'], self
 
+      product_id = find_product_shopify_id_by_sku_or_name(product.sku,
+                                                          product.name)
+      if product_id
+        product.shopify_id = product_id
+        return update_product(product)
+      end
       result = api_post 'products.json', product.shopify_obj
 
       {
-        'message' => "Product added with Shopify ID of " +
-                     "#{result['product']['id']} was added.",
+        'message' => 'Product added with Shopify ID of ' \
+  "#{result['product']['id']} was added.",
         'objects' => result
       }
     end
 
-    def update_product
-      product = Product.new
-      product.add_wombat_obj @payload['product'], self
+    def update_product(product = nil)
+      if product.nil?
+        product = Product.new
+        product.add_wombat_obj @payload['product'], self
+      end
       ## Using shopify_obj_no_variants is a workaround until
       ## specifying variants' Shopify IDs is added
 
@@ -284,6 +292,28 @@ module ShopifyIntegration
       if variant = variants.find {|v| v["sku"] == variant_sku}
         variant["id"]
       end
+    end
+
+    def find_product_shopify_id_by_sku_or_name(sku, name)
+      count = (api_get 'products/count')['count']
+      page_size = 250
+      pages = (count / page_size.to_f).ceil
+      current_page = 1
+
+      while current_page <= pages
+        products = api_get('products',
+                           'limit' => page_size,
+                           'page' => current_page)
+        current_page += 1
+        products['products'].each do |product|
+          return product['id'].to_s if product['title'] == name
+          product['variants'].each do |variant|
+            return variant['id'].to_s if variant['sku'] == sku
+          end
+        end
+      end
+
+      nil
     end
 
     def find_product_shopify_id_by_sku sku
