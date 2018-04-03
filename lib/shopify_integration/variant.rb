@@ -39,7 +39,7 @@ module ShopifyIntegration
     end
 
     def add_wombat_obj wombat_variant
-      @shopify_id = wombat_variant['shopify_id'] # or fetch it by sku?
+      @shopify_id = wombat_variant['shopify_id'] || wombat_variant['sync_id']
       @price = wombat_variant['price'].to_f
       @sku = wombat_variant['sku']
       @quantity = wombat_variant['quantity'].to_i
