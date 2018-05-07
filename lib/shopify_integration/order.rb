@@ -92,7 +92,7 @@ module ShopifyIntegration
         'adjustments' => [
           {
             'name' => 'Discounts',
-            'value' => @totals_discounts
+            'value' => -@totals_discounts
           }
         ],
         'fulfillments' => @fulfillments,
