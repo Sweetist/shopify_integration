@@ -40,6 +40,7 @@ describe ShopifyIntegration::Order do
       wombat_obj = create_order_from(payload)
       wombat_obj.wont_be_nil
       wombat_obj['fulfillments'].wont_be_nil
+      wombat_obj['fulfillments'].first['admin_graphql_api_id'].must_be_nil
     end
   end
 end

@@ -176,6 +176,7 @@
             "tracking_numbers": [],
             "tracking_url": null,
             "tracking_urls": [],
+            "admin_graphql_api_id": "gid://shopify/Fulfillment/389199822890",
             "receipt": {},
             "line_items": [
                 {
