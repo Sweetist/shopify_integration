@@ -29,7 +29,9 @@ module ShopifyIntegration
                       .map { |f| f.except('admin_graphql_api_id') }
       @totals_order = shopify_order['total_price'].to_f
       @line_items = []
-      shopify_order['line_items'].each do |shopify_li|
+      shopify_order['line_items']
+        .map { |f| f.except('admin_graphql_api_id') }
+        .each do |shopify_li|
         line_item = LineItem.new
         @line_items << line_item.add_shopify_obj(shopify_li, shopify_api)
       end
