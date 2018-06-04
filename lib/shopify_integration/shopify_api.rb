@@ -127,6 +127,17 @@ module ShopifyIntegration
       }
     end
 
+    def update_variant(variant)
+      if variant_id = (variant.shopify_id || find_product_shopify_id_by_sku(variant.sku))
+        api_put(
+          "variants/#{variant_id}.json",
+          variant.shopify_obj
+        )
+      else
+        raise "No variants with SKU: #{variant.sku}"
+      end
+    end
+
     def update_product(product = nil)
       if product.nil?
         product = Product.new
