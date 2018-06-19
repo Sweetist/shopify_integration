@@ -199,6 +199,7 @@
                     "product_exists": true,
                     "fulfillable_quantity": 0,
                     "grams": 0,
+                    "admin_graphql_api_id": "gid://shopify/LineItem/1010737020970",
                     "total_discount": "0.00",
                     "fulfillment_status": "fulfilled",
                     "tax_lines": [

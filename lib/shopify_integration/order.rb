@@ -1,6 +1,5 @@
 module ShopifyIntegration
   class Order
-
     attr_reader :shopify_id, :email, :shipping_address, :billing_address
 
     def add_shopify_obj shopify_order, shopify_api
@@ -26,7 +25,10 @@ module ShopifyIntegration
       @tax_lines = shopify_order['tax_lines']
       @shipping_lines = shopify_order['shipping_lines']
       @fulfillments = shopify_order['fulfillments']
-                      .map { |f| f.except('admin_graphql_api_id') }
+                      .map do |f|
+                        f.slice('tracking_number',
+                                'tracking_company')
+                      end
       @totals_order = shopify_order['total_price'].to_f
       @line_items = []
       shopify_order['line_items']
