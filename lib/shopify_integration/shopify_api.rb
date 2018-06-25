@@ -118,7 +118,12 @@ module ShopifyIntegration
         product.shopify_id = product_id
         return update_product(product)
       end
-      result = api_post 'products.json', product.shopify_obj
+
+      if product.variants.any?
+        result = api_post 'products.json', product.shopify_obj
+      else
+        result = api_post 'products.json', product.shopify_obj_no_variants
+      end
 
       {
         'message' => 'Product added with Shopify ID of ' \
@@ -150,7 +155,6 @@ module ShopifyIntegration
         "products/#{product.shopify_id}.json",
         product.shopify_obj_no_variants
       )
-
       product.variants.each do |variant|
         if variant_id = (variant.shopify_id || find_variant_shopify_id(product.shopify_id, variant.sku))
           api_put(
@@ -159,7 +163,7 @@ module ShopifyIntegration
           )
         else
           begin
-            api_post("products/#{product.shopify_id}/variants.json", variant.shopify_obj)
+            api_post("products/#{product.shopify_id}/variants.json", variant.shopify_obj) if variant.is_master == false
           rescue RestClient::UnprocessableEntity
             # theres already a variant with same options, bail.
           end

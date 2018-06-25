@@ -2,7 +2,7 @@ module ShopifyIntegration
   class Variant
     attr_reader :shopify_id, :shopify_parent_id, :quantity, :images,
                 :sku, :price, :options, :shipping_category, :name,
-                :inventory_management, :option_types
+                :inventory_management, :option_types, :is_master
 
     def add_shopify_obj shopify_variant, shopify_options
       @shopify_id = shopify_variant['id']
@@ -44,6 +44,7 @@ module ShopifyIntegration
       @sku = wombat_variant['sku']
       @quantity = wombat_variant['quantity'].to_i
       @weight = wombat_variant['weight']
+      @is_master = wombat_variant['is_master']
       @weight_unit = wombat_variant['weight_unit']
       @inventory_management = wombat_variant['inventory_management']
       option_types_all = wombat_variant['option_types']

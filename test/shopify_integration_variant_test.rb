@@ -23,6 +23,13 @@ describe ShopifyIntegration::Variant do
   end
 
   describe '#shopify_obj' do
+    it 'return is_master' do
+      payload = parse_fixture('product_payload_from_sweet.json')
+      variant = ShopifyIntegration::Variant.new
+      variant.add_wombat_obj payload['product']['variants'].first
+      variant.is_master
+             .must_equal true
+    end
     it 'return with inventory' do
       payload = parse_fixture('product_payload_from_sweet.json')
       variant = ShopifyIntegration::Variant.new

@@ -39,14 +39,14 @@ module ShopifyIntegration
       self
     end
 
-    def add_wombat_obj wombat_product, shopify_api
+    def add_wombat_obj(wombat_product, shopify_api)
       @shopify_id = wombat_product['shopify_id'] || shopify_api.config['sync_id']
       @wombat_id = wombat_product['id'].to_s
       @name = wombat_product['name']
       @description = wombat_product['description']
       @sku = wombat_product['sku']
 
-      @options = Array.new
+      @options = []
       unless wombat_product['options'].blank?
         wombat_product['options'].each do |wombat_option|
           option = Option.new
@@ -59,16 +59,17 @@ module ShopifyIntegration
         @options << option
       end
 
-      @variants = Array.new
       unless wombat_product['variants'].nil?
+        @variants = []
         wombat_product['variants'].each do |wombat_variant|
           variant = Variant.new
           variant.add_wombat_obj wombat_variant
-          @variants << variant
+          @master = variant if variant.is_master
+          @variants << variant unless variant.is_master
         end
       end
 
-      @images = Array.new
+      @images = []
       unless wombat_product['images'].nil?
         wombat_product['images'].each do |wombat_image|
           image = Image.new
@@ -113,11 +114,23 @@ module ShopifyIntegration
       }
     end
 
-    def shopify_obj_no_variants
-      obj_no_variants = shopify_obj
-      obj_no_variants['product'].delete('variants')
-      obj_no_variants
+    def master_variant
+      Util
+        .shopify_array([@master])
+        .map do |v|
+          v['variant'].slice('sku', 'price', 'weight', 'weight_units',
+                             'inventory_management', 'inventory_quantity')
+        end
     end
 
+    def shopify_obj_no_variants
+      obj_no_variants = shopify_obj
+      # obj_no_variants['product']['sku'] = @master.sku
+      # obj_no_variants['product']['price'] = @master.price
+      obj_no_variants['product'].delete('options')
+      obj_no_variants['product']['variants'] = master_variant if @master
+      # obj_no_variants['product'].delete('variants')
+      obj_no_variants
+    end
   end
 end

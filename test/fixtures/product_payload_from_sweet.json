@@ -34,6 +34,7 @@
     "depth": null,
     "variants": [
       {
+        "is_master": true,
         "sku": "SOAPF001",
         "price": 6.5,
         "cost_price": 0,
