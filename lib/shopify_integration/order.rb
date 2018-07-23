@@ -11,6 +11,7 @@ module ShopifyIntegration
       @fulfillment_status = shopify_order['fulfillment_status']
       @status = order_status
       @email = shopify_order['email']
+      @customer_id = shopify_order['customer']['id'] if shopify_order['customer']
       @currency = shopify_order['currency']
       @placed_on = shopify_order['created_at']
       @totals_item = shopify_order['total_line_items_price'].to_f
@@ -83,6 +84,7 @@ module ShopifyIntegration
         'channel' => @source,
         'status' => @status,
         'email' => @email,
+        'customer_id' => @customer_id,
         'currency' => @currency,
         'placed_on' => @placed_on,
         'tax_lines' => @tax_lines,

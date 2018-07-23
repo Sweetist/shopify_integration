@@ -20,6 +20,13 @@ describe ShopifyIntegration::Order do
       wombat_obj['status'].must_equal 'fulfilled'
     end
 
+    it 'return customer_id' do
+      payload = parse_fixture('shopify_order_fulfilled.json')
+      wombat_obj = create_order_from(payload)
+      wombat_obj.wont_be_nil
+      wombat_obj['customer_id'].wont_be_nil
+    end
+
     it 'return with tax_lines' do
       payload = parse_fixture('shopify_order_with_refund.json')
       wombat_obj = create_order_from(payload)
