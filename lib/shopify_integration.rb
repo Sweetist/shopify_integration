@@ -76,6 +76,7 @@ module ShopifyIntegration
       @config = { 'shopify_host' => request.env['HTTP_X_SHOPIFY_SHOP_DOMAIN'],
                   'status' => request.env['HTTP_X_SHOPIFY_TOPIC'] }
       api = ShopifyAPI.new(@payload, @config)
+      api.log_data(@config['shopify_host'], "Callback with #{obj_name} from shopify", @payload)
       obj = "ShopifyIntegration::#{obj_name.capitalize}".safe_constantize.new
       obj.add_shopify_obj @payload, api
       add_object obj_name, obj.wombat_obj
