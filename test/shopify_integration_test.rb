@@ -68,6 +68,15 @@ class ShopifyIntegrationTest < Minitest::Test
     assert_equal customer_body['id'], '706405506930370000'
   end
 
+  def test_respond_not_support
+    payload = load_fixture('get_orders_request_from_sweet.json')
+    post '/update_orders', payload
+
+    assert last_response.ok?
+    logs_body = JSON.parse(last_response.body)['logs'].first
+    refute_nil logs_body
+  end
+
   def test_respond_ok_for_get_orders
     payload = load_fixture('get_orders_request_from_sweet.json')
     response = load_fixture('get_orders_response_from_shopify.json')

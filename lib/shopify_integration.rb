@@ -67,6 +67,8 @@ module ShopifyIntegration
     ## update_ for product, customer
     ## set_inventory
     post '/*\_*' do |action, obj_name|
+      return not_support_response if action == 'update' && obj_name == 'orders'
+
       shopify_action "#{action}_#{obj_name}", obj_name.singularize
     end
 
@@ -209,11 +211,19 @@ module ShopifyIntegration
       validate(res)
     end
 
-    def add_logs_object(message:, type: 'orders', level: 'done', id: 'none')
+    def not_support_response
+      add_logs_object(message: 'Update Order Not Support For Shopify',
+                      status: 3)
+      add_integration_params
+      result 200, 'Not support response'
+    end
+
+    def add_logs_object(message:, type: 'orders', level: 'done', id: 'none', status: nil)
       add_object :log, id: id,
                        level: level,
                        message: message,
-                       type: type
+                       type: type,
+                       status: status
     end
 
     def add_integration_params
