@@ -4,6 +4,7 @@ git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
 gem 'endpoint_base', github: 'misteral/endpoint_base'
 gem 'httparty'
+gem 'i18n'
 gem 'pry'
 gem 'rest-client'
 gem 'sinatra'

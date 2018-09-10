@@ -19,8 +19,15 @@ require 'shopify_integration/customer'
 require 'shopify_integration/address'
 
 require 'sinatra'
+require 'i18n'
+require 'i18n/backend/fallbacks'
+
 require 'endpoint_base'
 require 'httparty'
+
+I18n::Backend::Simple.send(:include, I18n::Backend::Fallbacks)
+I18n.load_path += Dir[File.join(File.dirname(__FILE__), 'locales', '*.yml').to_s]
+I18n.backend.load_translations
 
 module ShopifyIntegration
   class Server < EndpointBase::Sinatra::Base
@@ -67,6 +74,7 @@ module ShopifyIntegration
     ## update_ for product, customer
     ## set_inventory
     post '/*\_*' do |action, obj_name|
+      # binding.pry
       return not_support_response if action == 'update' && obj_name == 'orders'
 
       shopify_action "#{action}_#{obj_name}", obj_name.singularize
@@ -212,7 +220,7 @@ module ShopifyIntegration
     end
 
     def not_support_response
-      add_logs_object(message: 'Update Order Not Support For Shopify',
+      add_logs_object(message: I18n.t('not_support'),
                       status: 3)
       add_integration_params
       result 200, 'Not support response'

@@ -74,7 +74,7 @@ class ShopifyIntegrationTest < Minitest::Test
 
     assert last_response.ok?
     logs_body = JSON.parse(last_response.body)['logs'].first
-    refute_nil logs_body
+    assert_equal logs_body['message'], I18n.t('not_support')
   end
 
   def test_respond_ok_for_get_orders
