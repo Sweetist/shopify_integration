@@ -1,0 +1,154 @@
+{
+  "request_id": "aee755bb-8bf1-46e6-a040-cead027e2a0a",
+  "parameters": {
+    "shopify_apikey": "7aab133abf294c3ade7a6b4ce9c99c0b",
+    "shopify_password": "a2bc1483adf9dbae35774977e17c3dd9",
+    "shopify_host": "sweet-shopify.myshopify.com",
+    "sync_id": null,
+    "sync_type": "shopify",
+    "sync_action": 17622,
+    "sweet_push": true,
+    "vendor": 3
+  },
+  "product": {
+    "id": "SOAPF000",
+    "name": "Artisan Tea Soap Set",
+    "sku": "SOAPF000",
+    "description": "desctip 4",
+    "price": 7.5,
+    "cost_price": 0,
+    "available_on": "2017-04-01T00:00:00Z",
+    "permalink": "artisan-tea-soap-set-soapf000",
+    "meta_description": null,
+    "meta_keywords": null,
+    "shipping_category": "Default",
+    "taxons": [
+      [
+        "Sweet - Staging Test",
+        "Combos"
+      ]
+    ],
+    "weight": "0",
+    "height": null,
+    "width": null,
+    "depth": null,
+    "variants": [
+      {
+        "is_master": true,
+        "sku": "SOAPF001",
+        "price": 6.5,
+        "cost_price": 0,
+        "weight": "0",
+        "height": null,
+        "width": null,
+        "depth": null,
+        "inventory_management": true,
+        "quantity": "9800",
+        "option_types": [
+          "Flavor",
+          "Variety"
+        ],
+        "options": {
+          "Variety": "Rose Earl Grey/ Vanilla White Tea"
+        },
+        "images": [
+          {
+            "url": "/spree/products/41/original/NYC-Skyline.jpg",
+            "position": 1,
+            "title": "",
+            "type": "original",
+            "dimensions": {
+              "height": 1393,
+              "width": 2048
+            }
+          }
+        ]
+      },
+      {
+        "sku": "SOAPF002",
+        "price": 7.5,
+        "cost_price": 0,
+        "weight": "0.5",
+        "height": null,
+        "width": null,
+        "depth": null,
+        "inventory_management": true,
+        "quantity": "10000",
+        "option_types": [
+          "Flavor",
+          "Variety"
+        ],
+        "options": {
+          "Variety": "Citrus Ginger/Matcha Green Tea"
+        },
+        "images": []
+      },
+      {
+        "sku": "SOAPF003",
+        "price": 0.12,
+        "cost_price": 0.12,
+        "weight": "0.12",
+        "height": "0.12",
+        "width": "0.12",
+        "depth": "0.12",
+        "inventory_management": true,
+        "quantity": "10000",
+        "option_types": [
+          "Flavor",
+          "Variety"
+        ],
+        "options": {
+          "Variety": "Spicy Peppermint"
+        },
+        "images": [
+          {
+            "url": "/spree/products/42/original/IMG_6414.JPG",
+            "position": 1,
+            "title": "",
+            "type": "original",
+            "dimensions": {
+              "height": 2448,
+              "width": 3264
+            }
+          }
+        ]
+      },
+      {
+        "sku": "1111",
+        "price": 1.23,
+        "cost_price": 0,
+        "weight": "0",
+        "height": null,
+        "width": null,
+        "depth": null,
+        "inventory_management": true,
+        "quantity": "10000",
+        "option_types": [
+          "Flavor",
+          "Variety"
+        ],
+        "options": {
+          "Variety": "Rose Earl Grey",
+          "Flavor": "Chocolate"
+        },
+        "images": []
+      }
+    ],
+    "options": [
+      "Flavor",
+      "Variety"
+    ],
+    "images": [
+      {
+        "url": "/spree/products/43/original/Shake_Shack_MSP_snow_shot.jpg",
+        "position": 1,
+        "title": "",
+        "type": "original",
+        "dimensions": {
+          "height": 1500,
+          "width": 2250
+        }
+      }
+    ]
+  }
+}

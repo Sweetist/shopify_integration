@@ -1,0 +1,241 @@
+{
+    "id": 306978783259,
+    "email": "test@customer.com",
+    "closed_at": null,
+    "created_at": "2018-01-25T13:54:50-05:00",
+    "updated_at": "2018-01-25T13:54:50-05:00",
+    "number": 142,
+    "note": null,
+    "token": "c93269373fecb1e4faf799705d1a3ada",
+    "gateway": "manual",
+    "test": false,
+    "total_price": "141.54",
+    "subtotal_price": "120.00",
+    "total_weight": 0,
+    "total_tax": "11.54",
+    "taxes_included": false,
+    "currency": "USD",
+    "financial_status": "paid",
+    "confirmed": true,
+    "total_discounts": "0.00",
+    "total_line_items_price": "120.00",
+    "cart_token": null,
+    "buyer_accepts_marketing": false,
+    "name": "#1142",
+    "referring_site": null,
+    "landing_site": null,
+    "cancelled_at": null,
+    "cancel_reason": null,
+    "total_price_usd": "141.54",
+    "checkout_token": null,
+    "reference": null,
+    "user_id": 3454828571,
+    "location_id": null,
+    "source_identifier": null,
+    "source_url": null,
+    "processed_at": "2018-01-25T13:54:50-05:00",
+    "device_id": null,
+    "phone": null,
+    "customer_locale": null,
+    "app_id": 1354745,
+    "browser_ip": null,
+    "landing_site_ref": null,
+    "order_number": 1142,
+    "discount_codes": [],
+    "note_attributes": [],
+    "payment_gateway_names": [
+        "manual"
+    ],
+    "processing_method": "manual",
+    "checkout_id": null,
+    "source_name": "shopify_draft_order",
+    "fulfillment_status": null,
+    "tax_lines": [
+        {
+            "title": "NY State Tax",
+            "price": "5.20",
+            "rate": 0.04
+        },
+        {
+            "title": "New York County Tax",
+            "price": "6.34",
+            "rate": 0.04875
+        }
+    ],
+    "tags": "",
+    "contact_email": "test@customer.com",
+    "order_status_url": "https://checkout.shopify.com/24470507/orders/c93269373fecb1e4faf799705d1a3ada/authenticate?key=17f49b6345e5b05c9ebd9e491fe6aea3",
+    "line_items": [
+        {
+            "id": 590224850971,
+            "variant_id": 6002742329371,
+            "title": "A test shipping category and cost",
+            "quantity": 10,
+            "price": "10.00",
+            "sku": "sku-25-17-42",
+            "variant_title": null,
+            "vendor": "sweet_shopify",
+            "fulfillment_service": "manual",
+            "product_id": 566219112475,
+            "requires_shipping": true,
+            "taxable": true,
+            "gift_card": false,
+            "name": "A test shipping category and cost",
+            "variant_inventory_management": null,
+            "properties": [],
+            "product_exists": true,
+            "fulfillable_quantity": 10,
+            "grams": 0,
+            "total_discount": "0.00",
+            "fulfillment_status": null,
+            "tax_lines": [
+                {
+                    "title": "NY State Tax",
+                    "price": "4.00",
+                    "rate": 0.04
+                },
+                {
+                    "title": "New York County Tax",
+                    "price": "4.87",
+                    "rate": 0.04875
+                }
+            ]
+        },
+        {
+            "id": 590224883739,
+            "variant_id": 5806056341531,
+            "title": "New inventory product al Shopify",
+            "quantity": 2,
+            "price": "10.00",
+            "sku": "new-2222",
+            "variant_title": null,
+            "vendor": "sweet_shopify",
+            "fulfillment_service": "manual",
+            "product_id": 537134563355,
+            "requires_shipping": true,
+            "taxable": true,
+            "gift_card": false,
+            "name": "New inventory product al Shopify",
+            "variant_inventory_management": "shopify",
+            "properties": [],
+            "product_exists": true,
+            "fulfillable_quantity": 2,
+            "grams": 0,
+            "total_discount": "0.00",
+            "fulfillment_status": null,
+            "tax_lines": [
+                {
+                    "title": "NY State Tax",
+                    "price": "0.80",
+                    "rate": 0.04
+                },
+                {
+                    "title": "New York County Tax",
+                    "price": "0.98",
+                    "rate": 0.04875
+                }
+            ]
+        }
+    ],
+    "shipping_lines": [
+        {
+            "id": 224665305115,
+            "title": "Standard Shipping",
+            "price": "10.00",
+            "code": "Standard Shipping",
+            "source": "shopify",
+            "phone": null,
+            "requested_fulfillment_service_id": null,
+            "delivery_category": null,
+            "carrier_identifier": null,
+            "discounted_price": "10.00",
+            "tax_lines": [
+                {
+                    "title": "NY State Tax",
+                    "price": "0.40",
+                    "rate": 0.04
+                },
+                {
+                    "title": "New York County Tax",
+                    "price": "0.49",
+                    "rate": 0.04875
+                }
+            ]
+        }
+    ],
+    "billing_address": {
+        "first_name": "New",
+        "address1": "NY 1001",
+        "phone": null,
+        "city": "New York",
+        "zip": "10016",
+        "province": "New York",
+        "country": "United States",
+        "last_name": "Customer",
+        "address2": "22-3",
+        "company": null,
+        "latitude": 40.74727,
+        "longitude": -73.9800645,
+        "name": "New Customer",
+        "country_code": "US",
+        "province_code": "NY"
+    },
+    "shipping_address": {
+        "first_name": "New",
+        "address1": "NY 1001",
+        "phone": null,
+        "city": "New York",
+        "zip": "10016",
+        "province": "New York",
+        "country": "United States",
+        "last_name": "Customer",
+        "address2": "22-3",
+        "company": null,
+        "latitude": 40.74727,
+        "longitude": -73.9800645,
+        "name": "New Customer",
+        "country_code": "US",
+        "province_code": "NY"
+    },
+    "fulfillments": [],
+    "refunds": [],
+    "customer": {
+        "id": 286682578971,
+        "email": "test@customer.com",
+        "accepts_marketing": false,
+        "created_at": "2017-12-05T11:23:10-05:00",
+        "updated_at": "2018-01-25T13:54:50-05:00",
+        "first_name": "New",
+        "last_name": "Customer",
+        "orders_count": 16,
+        "state": "disabled",
+        "total_spent": "14477.09",
+        "last_order_id": 306978783259,
+        "note": "",
+        "verified_email": true,
+        "multipass_identifier": null,
+        "tax_exempt": false,
+        "phone": null,
+        "tags": "",
+        "last_order_name": "#1142",
+        "default_address": {
+            "id": 308569702427,
+            "customer_id": 286682578971,
+            "first_name": "New",
+            "last_name": "Customer",
+            "company": "",
+            "address1": "NY 1001",
+            "address2": "22-3",
+            "city": "New York",
+            "province": "New York",
+            "country": "United States",
+            "zip": "10016",
+            "phone": "",
+            "name": "New Customer",
+            "province_code": "NY",
+            "country_code": "US",
+            "country_name": "United States",
+            "default": true
+        }
+    }
+}

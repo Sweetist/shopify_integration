@@ -1,0 +1,261 @@
+{
+    "id": 332483592219,
+    "email": "customer@customer.com",
+    "closed_at": "2018-02-11T10:34:16-05:00",
+    "created_at": "2018-02-11T10:32:11-05:00",
+    "updated_at": "2018-02-11T10:34:16-05:00",
+    "number": 216,
+    "note": null,
+    "token": "52365f0782ff4f199508266b42c682ee",
+    "gateway": "manual",
+    "test": false,
+    "total_price": "44.64",
+    "subtotal_price": "30.00",
+    "total_weight": 0,
+    "total_tax": "3.64",
+    "taxes_included": false,
+    "currency": "USD",
+    "financial_status": "paid",
+    "confirmed": true,
+    "total_discounts": "0.00",
+    "total_line_items_price": "30.00",
+    "cart_token": null,
+    "buyer_accepts_marketing": false,
+    "name": "#1216",
+    "referring_site": null,
+    "landing_site": null,
+    "cancelled_at": null,
+    "cancel_reason": null,
+    "total_price_usd": "44.64",
+    "checkout_token": null,
+    "reference": null,
+    "user_id": 3454828571,
+    "location_id": null,
+    "source_identifier": null,
+    "source_url": null,
+    "processed_at": "2018-02-11T10:32:11-05:00",
+    "device_id": null,
+    "phone": null,
+    "customer_locale": null,
+    "app_id": 1354745,
+    "browser_ip": null,
+    "landing_site_ref": null,
+    "order_number": 1216,
+    "discount_codes": [],
+    "note_attributes": [],
+    "payment_gateway_names": [
+        "manual"
+    ],
+    "processing_method": "manual",
+    "checkout_id": null,
+    "source_name": "shopify_draft_order",
+    "fulfillment_status": "fulfilled",
+    "tax_lines": [
+        {
+            "title": "NY State Tax",
+            "price": "1.64",
+            "rate": 0.04
+        },
+        {
+            "title": "New York County Tax",
+            "price": "2.00",
+            "rate": 0.04875
+        }
+    ],
+    "tags": "",
+    "contact_email": "customer@customer.com",
+    "order_status_url": "https://checkout.shopify.com/24470507/orders/52365f0782ff4f199508266b42c682ee/authenticate?key=cd755c8a57f3ac43783dc1d49f45c28b",
+    "line_items": [
+        {
+            "id": 635012644891,
+            "variant_id": 6058410803227,
+            "title": "Taxable 30-18-39",
+            "quantity": 3,
+            "price": "10.00",
+            "sku": "sku-30-18-39",
+            "variant_title": null,
+            "vendor": "sweet_shopify",
+            "fulfillment_service": "manual",
+            "product_id": 580591255579,
+            "requires_shipping": true,
+            "taxable": true,
+            "gift_card": false,
+            "name": "Taxable 30-18-39",
+            "variant_inventory_management": null,
+            "properties": [],
+            "product_exists": true,
+            "fulfillable_quantity": 0,
+            "grams": 0,
+            "total_discount": "0.00",
+            "fulfillment_status": "fulfilled",
+            "tax_lines": [
+                {
+                    "title": "NY State Tax",
+                    "price": "1.20",
+                    "rate": 0.04
+                },
+                {
+                    "title": "New York County Tax",
+                    "price": "1.46",
+                    "rate": 0.04875
+                }
+            ]
+        }
+    ],
+    "shipping_lines": [
+        {
+            "id": 243333890075,
+            "title": "Custom",
+            "price": "11.00",
+            "code": "custom",
+            "source": "shopify",
+            "phone": null,
+            "requested_fulfillment_service_id": null,
+            "delivery_category": null,
+            "carrier_identifier": null,
+            "discounted_price": "11.00",
+            "tax_lines": [
+                {
+                    "title": "NY State Tax",
+                    "price": "0.44",
+                    "rate": 0.04
+                },
+                {
+                    "title": "New York County Tax",
+                    "price": "0.54",
+                    "rate": 0.04875
+                }
+            ]
+        }
+    ],
+    "billing_address": {
+        "first_name": "Test",
+        "address1": "Adress 1",
+        "phone": null,
+        "city": "New York",
+        "zip": "10016",
+        "province": "Iowa",
+        "country": "United States",
+        "last_name": "CUstomer",
+        "address2": "Adress 2",
+        "company": "none",
+        "latitude": null,
+        "longitude": null,
+        "name": "Test CUstomer",
+        "country_code": "US",
+        "province_code": "IA"
+    },
+    "shipping_address": {
+        "first_name": "Test",
+        "address1": "Adress 1",
+        "phone": null,
+        "city": "New York",
+        "zip": "10016",
+        "province": "Iowa",
+        "country": "United States",
+        "last_name": "CUstomer",
+        "address2": "Adress 2",
+        "company": "none",
+        "latitude": null,
+        "longitude": null,
+        "name": "Test CUstomer",
+        "country_code": "US",
+        "province_code": "IA"
+    },
+    "fulfillments": [
+        {
+            "id": 311870881819,
+            "order_id": 332483592219,
+            "status": "success",
+            "created_at": "2018-02-11T10:34:16-05:00",
+            "service": "manual",
+            "updated_at": "2018-02-11T10:34:16-05:00",
+            "tracking_company": null,
+            "shipment_status": null,
+            "tracking_number": null,
+            "tracking_numbers": [],
+            "tracking_url": null,
+            "tracking_urls": [],
+            "admin_graphql_api_id": "gid://shopify/Fulfillment/389199822890",
+            "receipt": {},
+            "line_items": [
+                {
+                    "id": 635012644891,
+                    "variant_id": 6058410803227,
+                    "title": "Taxable 30-18-39",
+                    "quantity": 3,
+                    "price": "10.00",
+                    "sku": "sku-30-18-39",
+                    "variant_title": null,
+                    "vendor": "sweet_shopify",
+                    "fulfillment_service": "manual",
+                    "product_id": 580591255579,
+                    "requires_shipping": true,
+                    "taxable": true,
+                    "gift_card": false,
+                    "name": "Taxable 30-18-39",
+                    "variant_inventory_management": null,
+                    "properties": [],
+                    "product_exists": true,
+                    "fulfillable_quantity": 0,
+                    "grams": 0,
+                    "admin_graphql_api_id": "gid://shopify/LineItem/1010737020970",
+                    "total_discount": "0.00",
+                    "fulfillment_status": "fulfilled",
+                    "tax_lines": [
+                        {
+                            "title": "NY State Tax",
+                            "price": "1.20",
+                            "rate": 0.04
+                        },
+                        {
+                            "title": "New York County Tax",
+                            "price": "1.46",
+                            "rate": 0.04875
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "refunds": [],
+    "customer": {
+        "id": 321816035355,
+        "email": "customer@customer.com",
+        "accepts_marketing": false,
+        "created_at": "2017-12-20T06:50:51-05:00",
+        "updated_at": "2018-02-11T10:32:12-05:00",
+        "first_name": "Test",
+        "last_name": "CUstomer",
+        "orders_count": 24,
+        "state": "disabled",
+        "total_spent": "1356.57",
+        "last_order_id": 332483592219,
+        "note": "",
+        "verified_email": true,
+        "multipass_identifier": null,
+        "tax_exempt": false,
+        "phone": null,
+        "tags": "",
+        "last_order_name": "#1216",
+        "default_address": {
+            "id": 340466827291,
+            "customer_id": 321816035355,
+            "first_name": "Test",
+            "last_name": "CUstomer",
+            "company": "none",
+            "address1": "Adress 1",
+            "address2": "Adress 2",
+            "city": "New York",
+            "province": "Iowa",
+            "country": "United States",
+            "zip": "10016",
+            "phone": "",
+            "name": "Test CUstomer",
+            "province_code": "IA",
+            "country_code": "US",
+            "country_name": "United States",
+            "default": true
+        }
+    }
+}

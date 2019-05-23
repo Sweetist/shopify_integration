@@ -1,75 +1,39 @@
-# Shopify Integration
+# ShopifyIntegration
 
-## Overview
+Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/shopify_integration`. To experiment with that code, run `bin/console` for an interactive prompt.
 
-[Shopify](http://www.shopify.com/) is a popular online store service.
+TODO: Delete this and the text above, and describe your gem
 
-This is a fully hosted and supported integration for use with the
-[Wombat](http://wombat.co) product. With this integration you can perform the
-following functions:
+## Installation
 
-* Send product information to Shopify whenever products are created or updated.
-* Send customer and order information to Shopify whenever orders are created or
-updated.
+Add this line to your application's Gemfile:
 
-## Connection Parameters
+```ruby
+gem 'shopify_integration'
+```
 
-The following parameters must be setup within [Wombat](http://wombat.co):
+And then execute:
 
-| Name | Value |
-| :----| :-----|
-| shopify_apikey   | Shopify account API key (required) |
-| shopify_password | Shopify account password (required) |
-| shopify_host     | Shopify account host, no 'http://' (required) |
+    $ bundle
 
-## Webhooks
+Or install it yourself as:
 
-The following webhooks are implemented. For all 'get_' webhooks, a
-'shopify_id' field is return that use used to tie a Wombat object to its
-corresponding Shopify object.
+    $ gem install shopify_integration
 
-* **get_orders**: Retrieves a list of orders from Shopify with all details
-  of line items, taxes, discounts, shipping charges etc in Wombat official
-  format. Each order's 'id' will be the Shopify order ID. 'source' will be set
-  to your shopify_host parameter value. Also returns a list of shipment
-  objects associated with all orders.
-* **get_products**: Retrieves a list of products from shopify.
-  Also returns a list of inventory items, one for each product.
-* **add_product**
-* **update_product**
-* **get_inventory**: Retrieves one inventory items for each product.
-* **get_shipments**: Retrieves shipments recorded in Shopify.
-* **update_shipment**
-* **get_customers**: Retrieves a list of customers from Shopify (based on last
-  updated timestamp).
-* **add_customer**
-* **update_customer**: Note that a known bug exists that makes it
-  impossible to update a customer's address. We are looking into this now
-  with Shopify.
+## Usage
 
-## Notes
+TODO: Write usage instructions here
 
-There are various differences between how Wombat and Shopify handle objects
-that are worth noting and watching out for:
+## Development
 
-* Products: First, Shopify *only* stores SKU and price values in variants,
-  while Wombat has a sort of base product with a SKU and a price,
-  along with variants, which also have SKUs and prices. This integration
-  ignores Wombat's base SKU and price and only uses those from variants.
-  Second, Shopify only associates images only with base products, not for
-  each variant, while Wombat associates images with the base product AND
-  its variants. So, when adding a Wombat product to Shopify, we add all
-  Wombat images to the Shopify base product. The 'gotcha' here is that
-  products added to Shopify with images associated with variants will lose
-  that association. Finally, Shopify checks if image URLs are valid prior
-  to adding them, and will fail to add an image URL silently if not.
-* Customers: Shopify checks to ensure that customer emails and addresses
-  are unique, and will not add a customer if not.
+After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
-## Wombat
+To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
-[Wombat](http://wombat.co) allows you to connect to your own custom integrations.  Feel free to modify the source code and host your own version of the integration - or beter yet, help to make the official integration better by submitting a pull request!
+## Contributing
 
-![Wombat Logo](http://spreecommerce.com/images/wombat_logo.png)
+Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/shopify_integration.
 
-This integration is 100% open source an licensed under the terms of the New BSD License.
+## License
+
+The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).

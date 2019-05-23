@@ -1,0 +1,122 @@
+{
+  "request_id": "81210af2-9eb3-4137-9ae6-ff75261846da",
+  "parameters": {
+    "shopify_apikey": "7aab133abf294c3ade7a6b4ce9c99c0b",
+    "shopify_password": "a2bc1483adf9dbae35774977e17c3dd9",
+    "shopify_host": "sweet-shopify.myshopify.com",
+    "sync_id": "292721786907",
+    "sync_type": "shopify",
+    "sync_action": 17487,
+    "sweet_push": true
+  },
+  "order": {
+    "id": "R3-IN-1001246",
+    "status": "invoice",
+    "channel": "shopify",
+    "email": "customer@customer.com",
+    "currency": "USD",
+    "placed_on": "2018-01-15T18:40:30Z",
+    "updated_at": "2018-01-15T18:41:19Z",
+    "totals": {
+      "item": 120,
+      "adjustment": 10.65,
+      "tax": 10.65,
+      "shipping": 0,
+      "payment": 0,
+      "order": 130.65
+    },
+    "weight_in_oz": 0,
+    "adjustments": [
+      {
+        "name": "discount",
+        "value": 0
+      },
+      {
+        "name": "tax",
+        "value": 10.65
+      },
+      {
+        "name": "shipping",
+        "value": 0
+      }
+    ],
+    "guest_token": "TlNVeBYph6K7r5ijXoS_SQ",
+    "shipping_instructions": "          ",
+    "delivery_date": "01/15/2018",
+    "vendor_id": 3,
+    "display_number": "IN-1001246",
+    "line_items": [
+      {
+        "id": 28869,
+        "product_id": "no-sku",
+        "name": "Al test product created 9 Jan",
+        "quantity": 12,
+        "price": 10,
+        "weight_in_ounces": 0
+      }
+    ],
+    "payments": [],
+    "promotions": [],
+    "shipments": [
+      {
+        "id": "H53857314252",
+        "order_id": "R3-IN-1001246",
+        "email": "customer@customer.com",
+        "cost": 0,
+        "status": "received",
+        "stock_location": "Ed's Euro Bake - Default",
+        "shipping_method": null,
+        "tracking": "",
+        "placed_on": "2018-01-15T18:40:30Z",
+        "shipped_at": "2018-01-15T18:41:19Z",
+        "totals": {
+          "item": 120,
+          "adjustment": 10.65,
+          "tax": 0,
+          "shipping": 0,
+          "payment": 0,
+          "order": 130.65
+        },
+        "updated_at": "2018-01-15T18:41:19Z",
+        "channel": "shopify",
+        "items": [
+          {
+            "product_id": "no-sku",
+            "name": "Al test product created 9 Jan",
+            "quantity": "12",
+            "price": 10
+          }
+        ],
+        "shipping_method_code": null
+      }
+    ],
+    "shipping_address": {
+      "firstname": null,
+      "lastname": null,
+      "address1": "Adress 1",
+      "address2": "Adress 2",
+      "zipcode": "10016",
+      "city": "New York",
+      "state": "IA",
+      "country": "US",
+      "phone": "",
+      "company": null
+    },
+    "billing_address": {
+      "firstname": null,
+      "lastname": null,
+      "address1": "Adress 1",
+      "address2": "Adress 2",
+      "zipcode": "10016",
+      "city": "New York",
+      "state": "IA",
+      "country": "US",
+      "phone": "",
+      "company": null
+    },
+    "account": {
+      "fully_qualified_name": "Test CUstomer",
+      "email": "customer@customer.com"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+    "id": 706405506930370000,
+    "email": "bob@biller.com",
+    "accepts_marketing": true,
+    "created_at": null,
+    "updated_at": null,
+    "first_name": "Bob",
+    "last_name": "Biller",
+    "orders_count": 0,
+    "state": "disabled",
+    "total_spent": "0.00",
+    "last_order_id": null,
+    "note": "This customer loves ice cream",
+    "verified_email": true,
+    "multipass_identifier": null,
+    "tax_exempt": false,
+    "phone": null,
+    "tags": "",
+    "last_order_name": null,
+    "addresses": []
+}

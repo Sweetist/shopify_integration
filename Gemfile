@@ -1,33 +1,20 @@
-ruby '2.1.2'
 source 'https://rubygems.org'
 
-gem 'sinatra'
-gem 'tilt', '~> 1.4.1'
-gem 'tilt-jbuilder'
-gem 'jbuilder', '2.0.7'
-gem 'capistrano'
-gem 'rest-client'
-gem 'require_all'
+git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
-group :development do
-  gem 'shotgun'
-  gem 'pry'
-  gem 'awesome_print'
-end
+gem 'endpoint_base', github: 'misteral/endpoint_base'
+gem 'httparty'
+gem 'i18n'
+gem 'pry'
+gem 'rest-client'
+gem 'sinatra'
+gem 'sinatra-logger'
+gem 'tilt'
+gem 'tilt-jbuilder', require: 'sinatra/jbuilder'
 
 group :test do
-  gem 'vcr'
-  gem 'rspec'
-  gem 'webmock'
-  gem 'guard-rspec'
-  gem 'terminal-notifier-guard'
-  gem 'rb-fsevent', '~> 0.9.1'
-  gem 'rack-test'
+  gem 'rack-test', require: 'rack/test'
 end
 
-group :production do
-  gem 'foreman', '0.66.0'
-  gem 'unicorn'
-end
-
-gem 'endpoint_base', github: 'spree/endpoint_base'
+# Specify your gem's dependencies in shopify_integration.gemspec
+gemspec
