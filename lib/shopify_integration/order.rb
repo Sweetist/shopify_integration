@@ -4,7 +4,7 @@ module ShopifyIntegration
 
     def add_shopify_obj shopify_order, shopify_api
       @store_name = Util.shopify_host(shopify_api.config).split('.')[0]
-      @order_number = shopify_order['order_number']
+      @order_number = order_number_from_shopify(shopify_order)
       @shopify_id = shopify_order['id']
       @source = Util.shopify_host shopify_api.config
       @canceled_date = shopify_order['cancelled_at']
@@ -74,6 +74,12 @@ module ShopifyIntegration
       return 'fulfilled' if @fulfillment_status == 'fulfilled'
       return 'cancelled' if @canceled_date
       'completed'
+    end
+
+    def order_number_from_shopify(shopify_order)
+      num = shopify_order['name'].to_s
+      return num unless num.start_with?('#')
+      num[1..-1]
     end
 
     def wombat_obj
