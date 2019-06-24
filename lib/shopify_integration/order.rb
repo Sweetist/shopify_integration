@@ -79,12 +79,13 @@ module ShopifyIntegration
     def order_number_from_shopify(shopify_order)
       num = shopify_order['name'].to_s
       return num unless num.start_with?('#')
-      num[1..-1]
+      num[1..-1].strip
     end
 
     def wombat_obj
       {
         'id' => @store_name.upcase + '-' + @order_number.to_s,
+        'display_number' => @order_number.to_s,
         'shopify_id' => @shopify_id.to_s,
         'source' => @source,
         'channel' => @source,
