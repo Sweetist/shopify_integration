@@ -71,7 +71,7 @@ module ShopifyIntegration
     end
 
     def inventory_hash
-      return {} unless inventory_management
+      return {'inventory_management' => nil} unless inventory_management
       { 'inventory_management' => 'shopify',
         'inventory_quantity' => quantity }
     end
