@@ -82,7 +82,7 @@ module ShopifyIntegration
           'price' => @price,
           'sku' => @sku,
           'weight' => @weight,
-          'weight_units' => @weight_unit,
+          'weight_unit' => @weight_unit,
         }.merge(@options)
           .merge(inventory_hash)
       }

@@ -118,7 +118,7 @@ module ShopifyIntegration
       Util
         .shopify_array([@master])
         .map do |v|
-          v['variant'].slice('sku', 'price', 'weight', 'weight_units',
+          v['variant'].slice('sku', 'price', 'weight', 'weight_unit',
                              'inventory_management', 'inventory_quantity')
         end
     end
