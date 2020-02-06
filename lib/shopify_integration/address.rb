@@ -4,6 +4,9 @@ module ShopifyIntegration
     def add_shopify_obj shopify_address
       return self if shopify_address.nil?
 
+      @addr_firstname = shopify_address['first_name']
+      @addr_lastname = shopify_address['last_name']
+      @company = shopify_address['company']
       @address1 = shopify_address['address1']
       @address2 = shopify_address['address2']
       @zipcode = shopify_address['zip']
@@ -17,7 +20,10 @@ module ShopifyIntegration
 
     def add_wombat_obj wombat_address
       return self if wombat_address.nil?
-
+      
+      @addr_firstname = wombat_address['first_name']
+      @addr_lastname = wombat_address['last_name']
+      @company = wombat_address['company']
       @address1 = wombat_address['address1']
       @address2 = wombat_address['address2']
       @zipcode = wombat_address['zipcode']
@@ -31,6 +37,9 @@ module ShopifyIntegration
 
     def wombat_obj
       {
+        'firstname' => @addr_firstname.nil? ? "" : @addr_firstname,
+        'lastname' => @addr_lastname.nil? ? "" : @addr_lastname,
+        'company' => @company.nil? ? "" : @company,
         'address1' => @address1.nil? ? "" : @address1,
         'address2' => @address2.nil? ? "" : @address2,
         'zipcode' => @zipcode.nil? ? "" : @zipcode,
@@ -43,6 +52,9 @@ module ShopifyIntegration
 
     def shopify_obj
       {
+        'firstname' => @addr_firstname.nil? ? "" : @addr_firstname,
+        'lastname' => @addr_lastname.nil? ? "" : @addr_lastname,
+        'company' => @company.nil? ? "" : @company,
         'address1' => @address1.nil? ? "" : @address1,
         'address2' => @address2.nil? ? "" : @address2,
         'zip' => @zipcode.nil? ? "" : @zipcode,
