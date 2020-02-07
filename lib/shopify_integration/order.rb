@@ -43,6 +43,7 @@ module ShopifyIntegration
         @shipping_address = {
           'firstname' => shopify_order['shipping_address']['first_name'],
           'lastname' => shopify_order['shipping_address']['last_name'],
+          'company' => shopify_order['shipping_address']['company'],
           'address1' => shopify_order['shipping_address']['address1'],
           'address2' => shopify_order['shipping_address']['address2'],
           'zipcode' => shopify_order['shipping_address']['zip'],
@@ -57,6 +58,7 @@ module ShopifyIntegration
         @billing_address = {
           'firstname' => shopify_order['billing_address']['first_name'],
           'lastname' => shopify_order['billing_address']['last_name'],
+          'company' => shopify_order['billing_address']['company'],
           'address1' => shopify_order['billing_address']['address1'],
           'address2' => shopify_order['billing_address']['address2'],
           'zipcode' => shopify_order['billing_address']['zip'],
