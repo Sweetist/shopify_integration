@@ -11,6 +11,13 @@ module ShopifyIntegration
       @default_address = Address
                          .new
                          .add_shopify_obj(shopify_customer['default_address'])
+      if shopify_customer.has_key?('addresses')
+        @shipping_addresses = shopify_customer['addresses'].map do |addr|
+          Address.new.add_shopify_obj(addr)
+        end
+      else
+        @shipping_addresses = []
+      end
       @source = Util.shopify_host shopify_api.config
     end
 
@@ -36,7 +43,7 @@ module ShopifyIntegration
         'lastname' => @lastname,
         'tax_exempt' => @tax_exempt,
         'email' => @email,
-        'shipping_address' => @default_address.wombat_obj,
+        'shipping_addresses' => @shipping_addresses.map(&:wombat_obj),
         'billing_address' => @default_address.wombat_obj
       }
     end

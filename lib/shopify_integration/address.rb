@@ -4,6 +4,7 @@ module ShopifyIntegration
     def add_shopify_obj shopify_address
       return self if shopify_address.nil?
 
+      @shopify_id = shopify_address['id']
       @addr_firstname = shopify_address['first_name']
       @addr_lastname = shopify_address['last_name']
       @company = shopify_address['company']
@@ -20,7 +21,7 @@ module ShopifyIntegration
 
     def add_wombat_obj wombat_address
       return self if wombat_address.nil?
-      
+
       @addr_firstname = wombat_address['first_name']
       @addr_lastname = wombat_address['last_name']
       @company = wombat_address['company']
@@ -37,6 +38,7 @@ module ShopifyIntegration
 
     def wombat_obj
       {
+        'id' => @shopify_id.to_s,
         'firstname' => @addr_firstname.nil? ? "" : @addr_firstname,
         'lastname' => @addr_lastname.nil? ? "" : @addr_lastname,
         'company' => @company.nil? ? "" : @company,
