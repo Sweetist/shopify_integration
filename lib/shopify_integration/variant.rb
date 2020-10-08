@@ -1,9 +1,18 @@
 module ShopifyIntegration
   class Variant
+    # The keys here represent the weight units in Shopify
+    WEIGHT_UNIT_MAPPER = {
+      'g' => 'gm',
+      'kg' => 'kg',
+      'oz' => 'oz',
+      'lb' => 'lb',
+    }.freeze
+
     attr_reader :shopify_id, :shopify_parent_id, :quantity, :images,
                 :sku, :price, :options, :shipping_category, :name,
                 :inventory_management, :option_types, :is_master
 
+    # memoize attributes from the shopify variant
     def add_shopify_obj shopify_variant, shopify_options
       @shopify_id = shopify_variant['id']
       @shopify_parent_id = shopify_variant['product_id']
@@ -38,6 +47,7 @@ module ShopifyIntegration
       self
     end
 
+    # memoize the attributes coming from wombat (aka from Sweet)
     def add_wombat_obj wombat_variant
       @shopify_id = wombat_variant['shopify_id'] || wombat_variant['sync_id']
       @price = wombat_variant['price'].to_f
@@ -76,18 +86,20 @@ module ShopifyIntegration
         'inventory_quantity' => quantity }
     end
 
+    # hashed object to send to Shopify (to create/update object in Shopify)
     def shopify_obj
       {
         'variant' => {
           'price' => @price,
           'sku' => @sku,
           'weight' => @weight,
-          'weight_unit' => @weight_unit,
+          'weight_unit' => normalized_weight_units(@weight_unit, :to_shopify),
         }.merge(@options)
           .merge(inventory_hash)
       }
     end
 
+    # hashed object to send to wombat (to create/update object in Sweet)
     def wombat_obj
       {
         'sku' => @sku,
@@ -96,11 +108,19 @@ module ShopifyIntegration
         'shipping_category' => @shipping_category,
         'price' => @price,
         'weight' => @weight,
-        'weight_units' => @weight_unit,
+        'weight_units' => normalized_weight_units(@weight_unit, :to_wombat),
         'quantity' => @quantity,
         'options' => @options,
         'inventory_management' => @inventory_management
       }
+    end
+
+    def normalized_weight_units(unit, where_to)
+      if where_to == :to_wombat
+        WEIGHT_UNIT_MAPPER[unit]
+      else
+        WEIGHT_UNIT_MAPPER.key(unit)
+      end
     end
   end
 end
