@@ -10,7 +10,8 @@ module ShopifyIntegration
 
     attr_reader :shopify_id, :shopify_parent_id, :quantity, :images,
                 :sku, :price, :options, :shipping_category, :name,
-                :inventory_management, :option_types, :is_master
+                :inventory_management, :option_types, :is_master,
+                :backorderable
 
     # memoize attributes from the shopify variant
     def add_shopify_obj shopify_variant, shopify_options
@@ -59,6 +60,7 @@ module ShopifyIntegration
       @inventory_management = wombat_variant['inventory_management']
       option_types_all = wombat_variant['option_types']
       @option_types = option_types_all[0..2] if option_types_all
+      @backorderable = wombat_variant['backorderable']
       @options = {}
 
       unless wombat_variant['options'].nil?
@@ -82,8 +84,11 @@ module ShopifyIntegration
 
     def inventory_hash
       return {'inventory_management' => nil} unless inventory_management
-      { 'inventory_management' => 'shopify',
-        'inventory_quantity' => quantity }
+      {
+        'inventory_management' => 'shopify',
+        'inventory_quantity' => quantity,
+        'inventory_policy' => inventory_policy
+      }
     end
 
     # hashed object to send to Shopify (to create/update object in Shopify)
@@ -94,8 +99,7 @@ module ShopifyIntegration
           'sku' => @sku,
           'weight' => @weight,
           'weight_unit' => normalized_weight_units(@weight_unit, :to_shopify),
-        }.merge(@options)
-          .merge(inventory_hash)
+        }.merge(@options).merge(inventory_hash)
       }
     end
 
@@ -121,6 +125,10 @@ module ShopifyIntegration
       else
         WEIGHT_UNIT_MAPPER.key(unit)
       end
+    end
+
+    def inventory_policy
+      @backorderable ? 'continue' : 'deny'
     end
   end
 end
