@@ -134,12 +134,34 @@ module ShopifyIntegration
 
     def update_variant(variant)
       if variant_id = (variant.shopify_id || find_product_shopify_id_by_sku(variant.sku))
-        api_put(
+        updated_shopify_variant = api_put(
           "variants/#{variant_id}.json",
           variant.shopify_obj
         )
+
+        # equates to checking that the variant is an inventory type variant
+        update_inventory_levels(variant, updated_shopify_variant.dig('variant','inventory_item_id')) if variant.inventory_management
       else
         raise "No variants with SKU: #{variant.sku}"
+      end
+    end
+
+    def update_inventory_levels(variant, shopify_inventory_item_id)
+      shopify_inventory_levels = api_get('inventory_levels', {inventory_item_ids: shopify_inventory_item_id})['inventory_levels']
+      shopify_locations = api_get('locations')['locations']
+      variant.shopify_inventory_levels.each do |inventory_level|
+        location = inventory_level['stock_location']
+        shopify_location = shopify_locations.detect { |sl| sl['name'].downcase == location['name'].downcase }
+        next if shopify_location.nil?
+
+        api_post(
+          'inventory_levels/set.json',
+          {
+            location_id: shopify_location['id'],
+            inventory_item_id: shopify_inventory_item_id,
+            available: inventory_level['available']
+          }
+        )
       end
     end
 
@@ -157,10 +179,13 @@ module ShopifyIntegration
       )
       product.variants.each do |variant|
         if variant_id = (variant.shopify_id || find_variant_shopify_id(product.shopify_id, variant.sku))
-          api_put(
+          updated_shopify_variant = api_put(
             "variants/#{variant_id}.json",
             variant.shopify_obj
           )
+
+          # equates to checking that the variant is an inventory type variant
+          update_inventory_levels(variant, updated_shopify_variant.dig('variant','inventory_item_id')) if variant.inventory_management
         else
           begin
             api_post("products/#{product.shopify_id}/variants.json", variant.shopify_obj) if variant.is_master == false

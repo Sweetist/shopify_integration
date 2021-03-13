@@ -1,5 +1,6 @@
 module ShopifyIntegration
   class Payment
+    # memoize payment details from Shopify
     def add_shopify_obj(shopify_transaction)
       @id = shopify_transaction.shopify_id
       @status = shopify_transaction.status
@@ -9,6 +10,7 @@ module ShopifyIntegration
       self
     end
 
+    # hashed payemnt details to send to wombat (and finally to Sweet)
     def wombat_obj
       {
         'id' => @id,

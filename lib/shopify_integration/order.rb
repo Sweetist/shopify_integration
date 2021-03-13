@@ -2,6 +2,7 @@ module ShopifyIntegration
   class Order
     attr_reader :shopify_id, :email, :shipping_address, :billing_address
 
+    # memoize order details from Shopify
     def add_shopify_obj shopify_order, shopify_api
       @store_name = Util.shopify_host(shopify_api.config).split('.')[0]
       @order_number = order_number_from_shopify(shopify_order)

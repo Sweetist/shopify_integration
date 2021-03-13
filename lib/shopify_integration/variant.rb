@@ -25,7 +25,7 @@ module ShopifyIntegration
       @price = shopify_variant['price'].to_f
       @shipping_category = shopify_variant['requires_shipping'] ?
                             'Shipping Required' : 'Shipping Not Required'
-      @quantity = shopify_variant['inventory_quantity'].to_i
+      @quantity = shopify_variant['inventory_quantity'].to_i #aggregate quantity across all locations
 
       @images = Array.new
       unless shopify_variant['images'].nil?
@@ -79,6 +79,15 @@ module ShopifyIntegration
         end
       end
 
+      @stock_items = wombat_variant['stock_items']
+      # unless wombat_variant['stock_items'].nil?
+      #   wombat_variant['stock_items'].each do |wombat_stock_item|
+      #     stock_item = StockItem.new
+      #     stock_item.add_wombat_obj wombat_stock_item
+      #     @stock_items << stock_item
+      #   end
+      # end
+
       self
     end
 
@@ -86,7 +95,7 @@ module ShopifyIntegration
       return {'inventory_management' => nil} unless inventory_management
       {
         'inventory_management' => 'shopify',
-        'inventory_quantity' => quantity,
+        # 'inventory_quantity' => quantity,
         'inventory_policy' => inventory_policy
       }
     end
@@ -101,6 +110,10 @@ module ShopifyIntegration
           'weight_unit' => normalized_weight_units(@weight_unit, :to_shopify),
         }.merge(@options).merge(inventory_hash)
       }
+    end
+
+    def shopify_inventory_levels
+      @stock_items || []
     end
 
     # hashed object to send to wombat (to create/update object in Sweet)
