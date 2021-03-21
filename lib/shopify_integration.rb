@@ -201,7 +201,7 @@ module ShopifyIntegration
     def validate(res)
       return if res.code == 202
       raise PushApiError,
-        "Push not successful. Returned response code #{res.code} and message: #{res.body}"
+        "Push failed. Returned response code #{res.code} and message: #{res.body}"
     end
 
     def push(json_payload)

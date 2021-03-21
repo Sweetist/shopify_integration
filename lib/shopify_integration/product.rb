@@ -1,6 +1,6 @@
 module ShopifyIntegration
   class Product
-    attr_reader :shopify_id, :variants, :name, :sku
+    attr_reader :shopify_id, :variants, :name, :sku, :master
     attr_writer :shopify_id
 
     def add_shopify_obj shopify_product, shopify_api
@@ -119,8 +119,7 @@ module ShopifyIntegration
         .shopify_array([@master])
         .map do |v|
           v['variant'].slice('sku', 'price', 'weight', 'weight_unit',
-                             'inventory_management', 'inventory_quantity',
-                             'inventory_policy')
+                             'inventory_management', 'inventory_policy')
         end
     end
 

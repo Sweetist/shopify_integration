@@ -80,6 +80,7 @@ module ShopifyIntegration
       end
 
       @stock_items = wombat_variant['stock_items']
+      # TODO: implement StockItem class
       # unless wombat_variant['stock_items'].nil?
       #   wombat_variant['stock_items'].each do |wombat_stock_item|
       #     stock_item = StockItem.new

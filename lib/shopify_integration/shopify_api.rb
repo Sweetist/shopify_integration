@@ -121,8 +121,12 @@ module ShopifyIntegration
 
       if product.variants.any?
         result = api_post 'products.json', product.shopify_obj
+        product.variants.each do |variant|
+          set_inventory_levels(variant, result.dig('product','variants').detect {|item| item['sku'] == variant.sku}['inventory_item_id'])
+        end
       else
         result = api_post 'products.json', product.shopify_obj_no_variants
+        set_inventory_levels(product.master, result.dig('product', 'variants').first['inventory_item_id'])
       end
 
       {
@@ -140,19 +144,28 @@ module ShopifyIntegration
         )
 
         # equates to checking that the variant is an inventory type variant
-        update_inventory_levels(variant, updated_shopify_variant.dig('variant','inventory_item_id')) if variant.inventory_management
+        set_inventory_levels(variant, updated_shopify_variant.dig('variant','inventory_item_id'))
       else
         raise "No variants with SKU: #{variant.sku}"
       end
     end
 
-    def update_inventory_levels(variant, shopify_inventory_item_id)
+    def set_inventory_levels(variant, shopify_inventory_item_id)
+      return unless variant.inventory_management && shopify_inventory_item_id
+      return if variant.shopify_inventory_levels.none?
+
       shopify_inventory_levels = api_get('inventory_levels', {inventory_item_ids: shopify_inventory_item_id})['inventory_levels']
       shopify_locations = api_get('locations')['locations']
+      only_one_location = shopify_locations.size == 1 && variant.shopify_inventory_levels.size == 1
+      any_location_synced = false
       variant.shopify_inventory_levels.each do |inventory_level|
         location = inventory_level['stock_location']
         shopify_location = shopify_locations.detect { |sl| sl['name'].downcase == location['name'].downcase }
-        next if shopify_location.nil?
+        shopify_location ||= shopify_locations.first if only_one_location
+        if shopify_location.nil?
+          Rails.logger.info "Unable to find matching stock location for #{location['name']}"
+          next
+        end
 
         api_post(
           'inventory_levels/set.json',
@@ -162,7 +175,10 @@ module ShopifyIntegration
             available: inventory_level['available']
           }
         )
+        any_location_synced = true
       end
+
+      raise "Inventory failed to push to Shopify due to a mismatch in stock location names." unless any_location_synced
     end
 
     def update_product(product = nil)
@@ -177,6 +193,9 @@ module ShopifyIntegration
         "products/#{product.shopify_id}.json",
         product.shopify_obj_no_variants
       )
+      if product.variants.none? {|variant| !variant.is_master }
+        set_inventory_levels(product.master, master_result.dig('product','variants').first['inventory_item_id'])
+      end
       product.variants.each do |variant|
         if variant_id = (variant.shopify_id || find_variant_shopify_id(product.shopify_id, variant.sku))
           updated_shopify_variant = api_put(
@@ -185,10 +204,13 @@ module ShopifyIntegration
           )
 
           # equates to checking that the variant is an inventory type variant
-          update_inventory_levels(variant, updated_shopify_variant.dig('variant','inventory_item_id')) if variant.inventory_management
+          set_inventory_levels(variant, updated_shopify_variant.dig('variant','inventory_item_id'))
         else
           begin
-            api_post("products/#{product.shopify_id}/variants.json", variant.shopify_obj) if variant.is_master == false
+            unless variant.is_master
+              new_shopify_variant = api_post("products/#{product.shopify_id}/variants.json", variant.shopify_obj)
+              set_inventory_levels(variant, new_shopify_variant.dig('variant','inventory_item_id'))
+            end
           rescue RestClient::UnprocessableEntity
             # theres already a variant with same options, bail.
           end
