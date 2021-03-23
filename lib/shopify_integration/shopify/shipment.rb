@@ -10,20 +10,24 @@ module ShopifyIntegration
 
       def ship!
         if @shipment['status'] == 'received' && shopify_order_id
+
           begin
             api_post(
               "orders/#{shopify_order_id}/fulfillments.json",
               {
-                fulfillment: { tracking_number: @shipment['tracking'] }
+                fulfillment: {
+                  tracking_number: @shipment['tracking'],
+                  location_id: find_shopify_location_id_by_name
+                }
               }
             )
           rescue RestClient::UnprocessableEntity
-            raise "Shipment #{@shipment['id']} has already been marked as shipped on Shopify!"
+            raise "Shipment #{@shipment['id']} has already been marked as shipped in Shopify!"
           end
 
           "Updated shipment #{@shipment['id']} with tracking number #{@shipment['tracking']}."
         else
-          raise "Order #{@shipment['order_id']} not found on Shopify" unless shopify_order_id
+          raise "Order #{@shipment['order_id']} not found in Shopify" unless shopify_order_id
         end
       end
 
@@ -50,6 +54,25 @@ module ShopifyIntegration
         end
 
         return nil
+      end
+
+      def find_shopify_location_id_by_name
+        ships_from = @shipment.dig('stock_location', 'name')
+        raise "Ships from location must be provided" unless ships_from.present?
+        
+        shopify_locations = api_get('locations')['locations']
+        shopify_location = shopify_locations.detect do |location|
+          location['name'].downcase == ships_from
+        end
+
+        # if there is only one location in Shopify, use that for fulfillments
+        if shopify_location.nil? && shopify_locations.count == 1
+          shopify_location = shopify_locations.first
+        end
+
+        raise "Unable to find matching stock location '#{ships_from}' to ship from in Shopify" unless shopify_location
+
+        shopify_location['id']
       end
     end
   end
