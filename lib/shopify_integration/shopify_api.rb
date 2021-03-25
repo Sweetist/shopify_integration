@@ -255,25 +255,6 @@ module ShopifyIntegration
       }
     end
 
-    def set_inventory
-      inventory = Inventory.new
-      inventory.add_wombat_obj @payload['inventory']
-      puts "INV: " + @payload['inventory'].to_json
-      shopify_id = inventory.shopify_id.blank? ?
-                      find_product_shopify_id_by_sku(inventory.sku) : inventory.shopify_id
-
-      message = 'Could not find item with SKU of ' + inventory.sku
-      unless shopify_id.blank?
-        result = api_put "variants/#{shopify_id}.json",
-                         {'variant' => inventory.shopify_obj}
-        message = "Set inventory of SKU #{inventory.sku} " +
-                  "to #{inventory.quantity}."
-      end
-      {
-        'message' => message
-      }
-    end
-
     def add_metafield obj_name, shopify_id, wombat_id
       api_obj_name = (obj_name == "inventory" ? "product" : obj_name)
 
@@ -356,46 +337,84 @@ module ShopifyIntegration
       end
     end
 
-    def find_product_shopify_id_by_sku_or_name(sku, name)
-      count = (api_get 'products/count')['count']
-      page_size = 250
-      pages = (count / page_size.to_f).ceil
-      current_page = 1
+    def product_shopify_id_from_shopify_response(products, name: nil, sku: nil)
+      product_shopify_id = nil
 
-      while current_page <= pages
-        products = api_get('products',
-                           'limit' => page_size,
-                           'page' => current_page)
-        current_page += 1
-        products['products'].each do |product|
-          return product['id'].to_s if product['title'] == name
+      products.each do |product|
+        if name.present? && product['title'] == name
+          product_shopify_id = product['id'].to_s
+          break
+        else
           product['variants'].each do |variant|
-            return variant['id'].to_s if variant['sku'] == sku
+            if variant['sku'] == sku
+              product_shopify_id = variant['id'].to_s
+              break
+            end
           end
         end
       end
 
-      nil
+      product_shopify_id
     end
 
-    def find_product_shopify_id_by_sku sku
-      count = (api_get 'products/count')['count']
-      page_size = 250
-      pages = (count / page_size.to_f).ceil
+    def find_product_shopify_id_by_sku_or_name(sku, name)
+      count = api_get('products/count')['count'].to_i
+      page_size = 5
+      total_pages = ([count, 1].max / page_size.to_f).ceil
+
+      response = api_get_raw_response('products', limit: page_size)
+      products = JSON.parse(response.body.force_encoding('utf-8'))['products']
+      product_shopify_id = product_shopify_id_from_shopify_response(products, name: name, sku: sku)
+
       current_page = 1
 
-      while current_page <= pages do
-        products = api_get 'products',
-                           {'limit' => page_size, 'page' => current_page}
+      while product_shopify_id.nil? && response.headers.key?(:link) && current_page < total_pages do
+        # links can include next and previous separated by a comma
+        links = response.headers[:link].to_s.split(',').map(&:strip)
+        # link: <https://....?page_info=xxxx>; rel=next
+        next_link = links.detect { |link| link.to_s.split(';')[1].to_s.include?('next') }
+        # break if there is no link or only a previous link
+        break unless next_link
+        # parse the next link string to get just the query string
+        next_link_params = next_link.split(';')[0].strip.slice(1...-1).split('?')[1]
+
+        response = api_get_raw_response('products', next_link_params)
+        products = JSON.parse(response.body.force_encoding('utf-8'))['products']
+        product_shopify_id = product_shopify_id_from_shopify_response(products, name: name, sku: sku)
         current_page += 1
-        products['products'].each do |product|
-          product['variants'].each do |variant|
-            return variant['id'].to_s if variant['sku'] == sku
-          end
-        end
       end
 
-      return nil
+      product_shopify_id
+    end
+
+    def find_product_shopify_id_by_sku(sku)
+      count = api_get('products/count')['count'].to_i
+      page_size = 5
+      total_pages = ([count, 1].max / page_size.to_f).ceil
+
+      response = api_get_raw_response('products', limit: page_size)
+      products = JSON.parse(response.body.force_encoding('utf-8'))['products']
+      product_shopify_id = product_shopify_id_from_shopify_response(products, sku: sku)
+
+      current_page = 1
+
+      while product_shopify_id.nil? && response.headers.key?(:link) && current_page < total_pages do
+        # links can include next and previous separated by a comma
+        links = response.headers[:link].to_s.split(',').map(&:strip)
+        # link: <https://....?page_info=xxxx>; rel=next
+        next_link = links.detect { |link| link.to_s.split(';')[1].to_s.include?('next') }
+        # break if there is no link or only a previous link
+        break unless next_link
+        # parse the next link string to get just the query string
+        next_link_params = next_link.split(';')[0].strip.slice(1...-1).split('?')[1]
+
+        response = api_get_raw_response('products', next_link_params)
+        products = JSON.parse(response.body.force_encoding('utf-8'))['products']
+        product_shopify_id = product_shopify_id_from_shopify_response(products, sku: sku)
+        current_page += 1
+      end
+
+      product_shopify_id
     end
   end
 

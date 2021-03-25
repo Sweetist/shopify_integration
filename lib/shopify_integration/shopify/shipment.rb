@@ -39,27 +39,40 @@ module ShopifyIntegration
 
       def find_order_id_by_order_number(order_number)
         order_number = order_number.split("-").last
-        count = (api_get 'orders/count')['count']
-        page_size = 250
-        pages = (count / page_size.to_f).ceil
+        page_size = 100
+
+        count = api_get('orders/count')['count'].to_i
+        total_pages = ([count, 1].max.to_f / page_size).ceil
+
+        response = api_get_raw_response('orders', limit: page_size)
+        orders = JSON.parse(response.body.force_encoding('utf-8'))['orders']
+        order = orders.detect { |o| o['id'].to_s == order_number }
+
         current_page = 1
 
-        while current_page <= pages do
-          response = api_get 'orders',
-                             {'limit' => page_size, 'page' => current_page}
+        while order.nil? && response.headers.key?(:link) && current_page < total_pages do
+          # links can include next and previous separated by a comma
+          links = response.headers[:link].to_s.split(',').map(&:strip)
+          # link: <https://....?page_info=xxxx>; rel=next
+          next_link = links.detect { |link| link.to_s.split(';')[1].to_s.include?('next') }
+          # break if there is no link or only a previous link
+          break unless next_link
+          # parse the next link string to get just the query string
+          next_link_params = next_link.split(';')[0].strip.slice(1...-1).split('?')[1]
+
+          response = api_get_raw_response('orders', next_link_params)
+          orders = JSON.parse(response.body.force_encoding('utf-8'))['orders']
+          order = orders.detect { |o| o['id'].to_s == order_number }
           current_page += 1
-          response['orders'].each do |order|
-            return order['id'].to_s if order['order_number'].to_s == order_number
-          end
         end
 
-        return nil
+        order&.dig('id')
       end
 
       def find_shopify_location_id_by_name
         ships_from = @shipment.dig('stock_location', 'name')
         raise "Ships from location must be provided" unless ships_from.present?
-        
+
         shopify_locations = api_get('locations')['locations']
         shopify_location = shopify_locations.detect do |location|
           location['name'].downcase == ships_from

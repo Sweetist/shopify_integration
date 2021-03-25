@@ -34,9 +34,7 @@ module ShopifyIntegration
     end
 
     def shopify_obj
-      {
-        'inventory_quantity' => @quantity
-      }
+      {}
     end
   end
 end

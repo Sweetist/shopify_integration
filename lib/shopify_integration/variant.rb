@@ -96,7 +96,6 @@ module ShopifyIntegration
       return {'inventory_management' => nil} unless inventory_management
       {
         'inventory_management' => 'shopify',
-        # 'inventory_quantity' => quantity,
         'inventory_policy' => inventory_policy
       }
     end

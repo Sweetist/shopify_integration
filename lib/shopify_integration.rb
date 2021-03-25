@@ -74,7 +74,6 @@ module ShopifyIntegration
     ## update_ for product, customer
     ## set_inventory
     post '/*\_*' do |action, obj_name|
-      # binding.pry
       return not_support_response if action == 'update' && obj_name == 'orders'
 
       shopify_action "#{action}_#{obj_name}", obj_name.singularize
