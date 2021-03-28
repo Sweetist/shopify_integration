@@ -75,7 +75,7 @@ module ShopifyIntegration
 
         shopify_locations = api_get('locations')['locations']
         shopify_location = shopify_locations.detect do |location|
-          location['name'].downcase == ships_from
+          location['name'].downcase == ships_from.downcase
         end
 
         # if there is only one location in Shopify, use that for fulfillments
